@@ -1,0 +1,27 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Contact — Jungle</title><meta name="description" content="Jungle — design studio for digital, event & concert, and sports marketing.">
+<link rel="icon" href="assets/logo.svg"><link rel="stylesheet" href="assets/style.css"></head>
+<body data-page="contact">
+<header class="ph"><h1 class="x">Start a<br><span class="out">project</span></h1>
+  <div class="intro"><p>Tell us what’s happening and when. We reply within one working day.</p>
+  <div class="label" style="line-height:2">hello@jungle.studio<br>+00 000 000 000<br>Mon–Fri · 10–19</div></div></header>
+<section class="pad sec rule">
+  <form id="brief">
+    <div class="field"><span class="label">What do you need?</span>
+      <div class="chips mt" id="need">
+        <label class="chip"><input type="checkbox" name="Need" value="Digital" hidden>Digital campaign</label>
+        <label class="chip"><input type="checkbox" name="Need" value="Event" hidden>Event / concert</label>
+        <label class="chip"><input type="checkbox" name="Need" value="Sports" hidden>Sports</label>
+        <label class="chip"><input type="checkbox" name="Need" value="Other" hidden>Something else</label></div></div>
+    <div class="two"><div class="field"><label class="label">Your name</label><input name="Name" placeholder="Jane Doe" required></div>
+      <div class="field"><label class="label">Company / club / artist</label><input name="Company" placeholder="Northside FC"></div></div>
+    <div class="two"><div class="field"><label class="label">Email</label><input type="email" name="Email" placeholder="you@company.com" required></div>
+      <div class="field"><label class="label">Launch / show date</label><input name="Date" placeholder="June 2027"></div></div>
+    <div class="field"><label class="label">Budget</label><select name="Budget"><option>Under 5k</option><option>5–15k</option><option>15–50k</option><option>50k+</option></select></div>
+    <div class="field"><label class="label">Tell us about it</label><textarea name="Brief" placeholder="A 12-city tour, announcing in March…"></textarea></div>
+    <button class="btn" type="submit">Send brief <span>→</span></button>
+  </form>
+</section>
+<script>document.querySelectorAll('#need input').forEach(i=>i.onchange=()=>i.parentElement.classList.toggle('on',i.checked))</script>
+<script src="assets/data.js"></script><script src="assets/work/manifest.js?v=1791388775"></script><script src="assets/site.js"></script></body></html>
