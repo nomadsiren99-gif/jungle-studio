@@ -94,7 +94,7 @@ if (page === 'home') {
   // Client marks (invented clients get simple generated monograms, not text wordmarks).
   const shapes = ['<circle cx="24" cy="24" r="22"/>', '<rect x="3" y="3" width="42" height="42" rx="6"/>', '<path d="M24 2 46 24 24 46 2 24Z"/>', '<rect x="2" y="10" width="44" height="28" rx="14"/>'];
   const mark = (n, i) => { const ini = n.split(' ').map(w => w[0]).join('').slice(0, 2);
-    return `<span class="mark" role="img" aria-label="${n}"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">${shapes[i % 4]}<text x="24" y="30.5" text-anchor="middle" fill="currentColor" stroke="none" font-family="New Kansas,serif" font-size="17">${ini}</text></svg>${n}</span>`; };
+    return `<span class="mark" role="img" aria-label="${n}"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="2">${shapes[i % 4]}<text x="24" y="30.5" text-anchor="middle" fill="currentColor" stroke="none" font-family="Libre Caslon Display,serif" font-size="17">${ini}</text></svg>${n}</span>`; };
   const clients = PROJECTS.map(p => p.client.replace(/ (Live|Festival|Football Club|Streetwear|Records|Boxing Promotions|Network)$/, ''));
   const row = clients.map(mark).join('');
   $('#logos').innerHTML = row + row;

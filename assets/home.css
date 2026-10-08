@@ -87,10 +87,10 @@ body.go .rise{opacity:1;transform:none}
 .bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(300px,auto);gap:8px;margin-top:56px}
 .bento>*{position:relative;overflow:hidden;border-radius:6px;border:1px solid rgba(244,243,239,.16);padding:28px;display:flex;flex-direction:column;justify-content:space-between}
 .b-quote{grid-column:span 2;grid-row:span 2;background:var(--paper);color:var(--ink);border:0}
-.b-quote blockquote{font-family:"New Kansas",serif;font-size:clamp(26px,2.7vw,44px);line-height:1.12;letter-spacing:-.02em}
+.b-quote blockquote{font-family:"Libre Caslon Display",serif;font-size:clamp(26px,2.7vw,44px);line-height:1.12;letter-spacing:-.02em}
 .b-quote figcaption b{display:block;font-weight:700}
 .b-quote figcaption span{opacity:.65;font-size:15px}
-.b-stat b{font-family:"New Kansas",serif;font-weight:500;font-size:clamp(48px,5vw,84px);line-height:.9;letter-spacing:-.04em}
+.b-stat b{font-family:"Libre Caslon Display",serif;font-weight:400;font-size:clamp(48px,5vw,84px);line-height:.9;letter-spacing:-.04em}
 .b-stat p{max-width:22ch;color:rgba(244,243,239,.75)}
 .b-stat .art{opacity:.22;z-index:-1}
 .b-stat{isolation:isolate}
