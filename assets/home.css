@@ -15,21 +15,21 @@ body.go .rise{opacity:1;transform:none}
 .hero-ctas .chip{padding:20px 30px;font-size:13px;white-space:nowrap}
 .btn{white-space:nowrap}
 
-.hero-reel{position:relative;height:min(74dvh,680px);display:flex;flex-direction:column}
-.reel-stage{position:relative;flex:1}
-.rc{position:absolute;inset:0 0 0 auto;margin-inline:auto;left:0;height:100%;aspect-ratio:4/5;max-width:100%;border-radius:6px;overflow:hidden;
-  transition:transform .9s var(--ease),opacity .9s var(--ease),filter .9s var(--ease);box-shadow:0 30px 60px -30px rgba(0,0,0,.8)}
-.rc .art b{font-size:clamp(70px,9vw,170px)!important}
-.rc[data-pos="0"]{z-index:4}
-.rc[data-pos="1"]{z-index:3;transform:translate(7%,-3%) rotate(4deg) scale(.93);filter:brightness(.55)}
-.rc[data-pos="2"]{z-index:2;transform:translate(13%,-6%) rotate(8deg) scale(.86);filter:brightness(.35)}
-.rc[data-pos="3"],.rc[data-pos="hid"]{z-index:1;transform:translate(16%,-8%) rotate(10deg) scale(.8);opacity:0}
-.rc[data-pos="out"]{z-index:5;transform:translate(-70%,6%) rotate(-14deg) scale(.95);opacity:0;pointer-events:none}
-.reel-cap{display:flex;justify-content:space-between;align-items:center;gap:16px;padding-top:20px}
-.reel-cap h3{font-size:clamp(18px,1.6vw,24px)}
-.reel-cap .label{opacity:.6}
-.reel-nav{display:flex;gap:8px}
-.reel-nav .chip{width:48px;height:48px;padding:0;font-size:16px;letter-spacing:0}
+/* project wall (after superside.com) */
+.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;height:100dvh;margin-block:-96px -48px;overflow:hidden;
+  mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)}
+.wcol{overflow:hidden}
+.wtrack{display:flex;flex-direction:column;gap:16px;animation:wall 40s linear infinite}
+.wcol.down .wtrack{animation-direction:reverse}
+.wall:hover .wtrack{animation-play-state:paused}
+@keyframes wall{to{transform:translateY(calc(-50% - 8px))}}
+.tile{position:relative;display:block;aspect-ratio:.68;border-radius:10px;overflow:hidden;background:#151515}
+.tile.tall{aspect-ratio:.52}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.tile:hover img{transform:scale(1.05)}
+.tile .label{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:99px;background:rgba(10,10,10,.5);
+  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;opacity:0;transform:translateY(6px);transition:.4s cubic-bezier(.4,0,.2,1)}
+.tile:hover .label{opacity:1;transform:none}
 
 /* CLIENT MARKS (the page's one marquee) */
 .logos{border-block:1px solid rgba(244,243,239,.14);overflow:hidden;padding:28px 0;
@@ -97,7 +97,7 @@ body.go .rise{opacity:1;transform:none}
 
 @media(max-width:900px){
   .hero{grid-template-columns:1fr;min-height:auto;padding-top:112px}
-  .hero-reel{height:62dvh}
+  .wall{height:70dvh;margin:0}
   .bento{grid-template-columns:1fr 1fr}
   .acc{flex-direction:column;height:auto}
   .panel,.panel.open{flex:none;height:440px}
@@ -105,6 +105,7 @@ body.go .rise{opacity:1;transform:none}
 }
 @media(max-width:560px){.b-quote{grid-column:span 2}.bento{grid-auto-rows:minmax(200px,auto)}}
 @media(prefers-reduced-motion:reduce){
+  .wtrack{animation:none}
   .rise{opacity:1;transform:none}
   .pan{height:auto}.pan-sticky{position:static;height:auto;overflow-x:auto;padding-block:96px}.pan-track{animation:none}
   .logo-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}

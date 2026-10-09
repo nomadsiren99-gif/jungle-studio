@@ -74,22 +74,18 @@ document.addEventListener('click', e => {
 if (page === 'home') {
   const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-  // Hero reel: a shuffling stack of the latest work, so the first screen is the portfolio.
-  const feat = PROJECTS.slice(0, 6), reel = $('#reel');
-  $('.reel-stage', reel).insertAdjacentHTML('afterbegin', feat.map((p, i) =>
-    `<a class="rc" href="project.html?p=${p.slug}" aria-label="${p.title}" data-i="${i}">${art(p)}</a>`).join(''));
-  const rcs = $$('.rc', reel), cap = $('.reel-cap h3', reel), capm = $('.reel-cap .label', reel);
-  let k = 0, timer;
-  const show = n => {
-    k = (n + feat.length) % feat.length;
-    rcs.forEach((c, i) => { const pos = (i - k + feat.length) % feat.length; c.dataset.pos = pos > 3 ? (pos === feat.length - 1 ? 'out' : 'hid') : pos; c.tabIndex = pos ? -1 : 0; });
-    cap.textContent = feat[k].title; capm.textContent = `${CATS[feat[k].cat]}${feat[k].tag ? ` / ${feat[k].tag}` : ''} / ${feat[k].year}`;
-  };
-  const auto = () => { clearInterval(timer); if (!reduce) timer = setInterval(() => show(k + 1), 3200); };
-  $('[data-go="next"]', reel).onclick = () => { show(k + 1); auto(); };
-  $('[data-go="prev"]', reel).onclick = () => { show(k - 1); auto(); };
-  reel.onmouseenter = () => clearInterval(timer); reel.onmouseleave = auto;
-  show(0); auto();
+  // Hero wall (after superside.com): 3 columns of project images drifting vertically,
+  // neighbours in opposite directions, ~25px/s. Each column holds its list twice so -50% loops seamlessly.
+  const feat = PROJECTS.slice(0, 6);
+  const tiles = PROJECTS.filter(p => p.img).flatMap(p => [p.img, ...(p.gallery || []).slice(0, 3)].map(src => ({ p, src })));
+  const wall = $('#wall');
+  wall.innerHTML = [0, 1, 2].map(c => {
+    const col = tiles.filter((_, i) => i % 3 === c), cells = col.map((t, i) =>
+      `<a class="tile${i % 3 === 1 ? ' tall' : ''}" href="project.html?p=${t.p.slug}" tabindex="-1" aria-hidden="true"><img src="${t.src}" alt="" decoding="async"><span class="label">${t.p.title}</span></a>`).join('');
+    return `<div class="wcol${c % 2 ? ' down' : ''}"><div class="wtrack">${cells}${cells}</div></div>`;
+  }).join('');
+  const speed = () => $$('.wtrack', wall).forEach(t => t.style.animationDuration = (t.scrollHeight / 2 / 25) + 's');
+  speed(); addEventListener('load', speed);
 
   // Client marks (invented clients get simple generated monograms, not text wordmarks).
   const shapes = ['<circle cx="24" cy="24" r="22"/>', '<rect x="3" y="3" width="42" height="42" rx="6"/>', '<path d="M24 2 46 24 24 46 2 24Z"/>', '<rect x="2" y="10" width="44" height="28" rx="14"/>'];
