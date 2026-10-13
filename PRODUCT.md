@@ -1,6 +1,6 @@
 # Jungle.
 
-A design-led creative agency (Nepal) providing graphic design, motion design and video editing to brands and marketing teams. Not branding, brand strategy or consultancy.
+A design-led creative agency (Nepal) providing creative design, motion, digital design, copy and campaigns, and AI services to brands and marketing teams. Not branding or production.
 
 - **Audience:** growing businesses, in-house marketing teams, marketing agencies (white-label when agreed), founders with clear briefs.
 - **Engagement:** project-based work, ongoing creative support, campaign production.

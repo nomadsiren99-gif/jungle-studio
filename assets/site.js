@@ -31,7 +31,7 @@ document.body.insertAdjacentHTML('beforeend', `
   <div class="cta-row"><a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a>
   <a class="chip chip-lg" href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a></div>`}
   <div class="foot">
-    <div>${LOGO}<small>A design-led creative agency.<br>Graphic design, motion design and video editing.</small></div>
+    <div>${LOGO}<small>A design-led creative agency.<br>Design, motion, digital, content and AI services.</small></div>
     <div><span class="label">Site</span><a href="work.html">Work</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div>
     <div><span class="label">Follow</span><a href="https://instagram.com/jungledesigns">Instagram</a><a href="https://designbyjungle.com">designbyjungle.com</a></div>
     <div><span class="label">Say hello</span><a href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a><small>© 2026 Jungle.</small></div>
@@ -74,11 +74,15 @@ document.addEventListener('click', e => {
 });
 
 // ── page renderers
+// Services (mirrors superside.com's list, without branding and production services).
 const DISCIPLINES = [
-  ['Graphic Design', 'Design that shows up.', ['Social and digital ads', 'Campaign assets', 'Presentations and layouts', 'Print and event materials']],
-  ['Motion Design', 'Motion that moves.', ['Motion graphics', 'Animated typography', 'Logo animation for clients', 'Social and ad animations']],
-  ['Video Editing', 'Video that connects.', ['Short-form and social edits', 'Reels and vertical formats', 'Promo and campaign edits', 'Cutdowns and versions']],
+  ['Creative Design', 'Design that shows up.', ['Ad creative', 'Social media creative', 'Presentation design', 'Illustration design', 'eBooks and report design', 'Print design', 'Packaging and merchandise design']],
+  ['Motion Design', 'Motion that moves.', ['Motion design', 'Video editing']],
+  ['Digital Design', 'Built for every screen.', ['Web design', 'Email creation', 'Design systems', 'Product design', 'Immersive experiences']],
+  ['Content and Campaigns', 'Words and plans that land.', ['Copywriting', 'Campaign strategy']],
+  ['AI Services', 'Faster, with a human eye.', ['AI-powered creative', 'AI consulting', 'Automation']],
 ];
+const SERVICE_COUNT = DISCIPLINES.reduce((n, d) => n + d[2].length, 0);
 
 if (page === 'home') {
   // Hero wall (after superside.com): 3 columns drifting ~25px/s, neighbours opposite. Lists are doubled so -50% loops.
@@ -104,6 +108,7 @@ if (page === 'home') {
   const measure = () => { const d = Math.max(0, pan.scrollWidth - innerWidth); pan.style.setProperty('--dist', d + 'px'); $('.pan').style.setProperty('--len', d + 'px'); };
   measure(); addEventListener('resize', measure); document.fonts && document.fonts.ready.then(measure);
 
+  $$('[data-count]').forEach(e => e.textContent = SERVICE_COUNT);
   $('#drows').innerHTML = DISCIPLINES.map(([t, v, list]) => `<a class="drow reveal" href="services.html#${t.split(' ')[0].toLowerCase()}">
     <div><h3 class="x">${t}</h3><p class="v">${v}</p></div><ul>${list.map(x => `<li>${x}</li>`).join('')}</ul><span class="go">${ARROW}</span></a>`).join('');
 
@@ -117,8 +122,8 @@ if (page === 'home') {
   const ico = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
   const tick = c => `<svg class="tick" viewBox="0 0 26 26" style="--c:${c}" role="img" aria-label="Yes"><path d="M6 13.5l4.5 4.5L20 8.5"/></svg>`;
   const ROWS = [
-    ['Jungle.', 'Designers, motion artists and editors working alongside your team, on your brand, on your dates.', null, [1, 1, 1, 1, 1, 1]],
-    ['In-house hire', 'One person rarely covers design, motion and video, and hiring takes months.', 'hire', [0, 0, 1, 1, 0, 1]],
+    ['Jungle.', 'Designers, motion artists, writers and AI specialists working alongside your team, on your brand, on your dates.', null, [1, 1, 1, 1, 1, 1]],
+    ['In-house hire', 'One hire rarely covers design, motion, web and copy, and hiring takes months.', 'hire', [0, 0, 1, 1, 0, 1]],
     ['Big agencies', 'Strong work, but slow, costly and built around rigid process.', 'agency', [0, 0, 1, 1, 0, 0]],
     ['Freelancers', 'Great for one-offs, harder to rely on for steady volume.', 'free', [1, 1, 1, 0, 1, 1]],
     ['AI tools only', 'Fast and cheap, but no judgement, no brand sense, no craft.', 'ai', [1, 1, 0, 0, 1, 0]],
@@ -137,7 +142,7 @@ if (page === 'home') {
 }
 
 if (page === 'services') {
-  const ex = { 'Graphic Design': 'janakpur-bolts', 'Motion Design': 'nepathya-auckland', 'Video Editing': 'lumbini-all-stars' };
+  const ex = { 'Creative Design': 'janakpur-bolts', 'Motion Design': 'nepathya-auckland', 'Digital Design': 'trn-fest', 'Content and Campaigns': '1974-ad-tour', 'AI Services': 'lumbini-all-stars' };
   $('#disciplines').innerHTML = DISCIPLINES.map(([t, v, list], i) => { const p = PROJECTS.find(x => x.slug === ex[t]) || PROJECTS[i];
     return `<section class="split rule reveal" id="${t.split(' ')[0].toLowerCase()}" style="padding-block:clamp(56px,7vw,112px);align-items:start">
       <a class="card" href="project.html?p=${p.slug}"><div class="thumb">${art(p)}</div><div class="meta"><div><h3 class="w" style="font-size:17px">${p.title}</h3></div></div></a>

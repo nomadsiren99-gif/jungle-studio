@@ -7,4 +7,4 @@ Source of truth: *Jungle. Brand Book v1.0 (October 2026)*. Tokens live in `asset
 - **Graphic language:** the 10° slant (section edges, hover wipes, page transition), the full stop ending every headline (Green on Ink, Ink on Paper/Green; added automatically by `site.js`), one 10°-tilted sticker per layout.
 - **Motion:** ease out, settle fast, 0.3-0.6s. The dot lands with one bounce; hero titles build word by word; panels wipe along the slant. All of it is disabled under reduced motion.
 - **Logo:** supplied artwork only. Green dot on Ink (nav), all-Ink in the footer on Paper, Ink dot on the Green transition panel.
-- **Voice:** clear, human, confident, work-first. Services are graphic design, motion design and video editing. Never offer branding or brand strategy.
+- **Voice:** clear, human, confident, work-first. Services mirror superside.com minus branding and production (see DISCIPLINES in site.js). Never offer branding.
