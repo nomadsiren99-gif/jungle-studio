@@ -319,28 +319,20 @@ if (page === 'service') {
 }
 
 if (page === 'work') {
-  const grid = $('#grid'), list = $('#list');
-  grid.innerHTML = PROJECTS.map(card).join('');
-  list.innerHTML = PROJECTS.map((p, i) => `<a href="project.html?p=${p.slug}" data-c="${p.cat}" data-i="${i}">
-    <h3 class="w">${p.title}</h3><span class="muted">${sector(p)}</span><span class="muted">${p.scope.slice(0, 2).join(', ')}</span><span class="n muted">${p.year}</span></a>`).join('');
-  const counts = { all: PROJECTS.length }; PROJECTS.forEach(p => counts[p.cat] = (counts[p.cat] || 0) + 1);
-  $$('[data-f]').forEach(b => b.insertAdjacentHTML('beforeend', `<sup>${counts[b.dataset.f] || 0}</sup>`));
+  // Layout after superside.com/our-work: collage, statement, logos, full-bleed 2-up tiles.
+  const real = PROJECTS.filter(p => p.img), list = real.concat(PROJECTS.filter(p => !p.img));
+  const pics = real.flatMap(p => [p.img, ...(p.gallery || []).slice(0, 2)]).slice(0, 10);
+  $('#reel').innerHTML = pics.map((src, i) => `<span class="r${i}"><img src="${src}" alt="" loading="${i < 5 ? 'eager' : 'lazy'}"></span>`).join('');
+  const CL = [['janakpur-bolts', 'Janakpur Bolts'], ['husqvarna', 'Husqvarna'], ['lumbini-all-stars', 'Lumbini All Stars'], ['plo-lubricants', 'PLO Lubricants'], ['ptt', 'PTT'], ['sk-zic', 'SK enmove ZIC']];
+  $('#wlogos').innerHTML = CL.map(([f, n]) => `<span class="clogo"><img src="assets/clients/${f}.png" alt="${n}" width="120" height="120"></span>`).join('').repeat(4);
+  $('#grid').innerHTML = list.map(p => `<a class="tile2" data-c="${p.cat}" href="project.html?p=${p.slug}">${art(p)}
+    <div class="t2-cap"><h2 class="w">${p.title} <span aria-hidden="true">+</span></h2><p>${p.scope.slice(0, 3).join(', ')}</p></div></a>`).join('');
   const apply = f => {
     $$('[data-f]').forEach(x => { x.classList.toggle('on', x.dataset.f === f); x.setAttribute('aria-pressed', x.dataset.f === f); });
-    $$('#grid .card, #list a').forEach(c => c.hidden = f !== 'all' && c.dataset.c !== f);
+    $$('#grid .tile2').forEach(c => c.hidden = f !== 'all' && c.dataset.c !== f);
   };
-  $$('[data-f]').forEach(b => b.onclick = () => apply(b.dataset.f));
+  $$('[data-f]').forEach(b => b.onclick = () => { apply(b.dataset.f); history.replaceState(null, '', b.dataset.f === 'all' ? 'work.html' : `?f=${b.dataset.f}`); });
   const f0 = new URLSearchParams(location.search).get('f'); apply(f0 && CATS[f0] ? f0 : 'all');
-  $$('[data-v]').forEach(b => b.onclick = () => {
-    $$('[data-v]').forEach(x => { x.classList.toggle('on', x === b); x.setAttribute('aria-pressed', x === b); });
-    grid.hidden = b.dataset.v !== 'grid'; list.hidden = b.dataset.v !== 'list';
-  });
-  const peek = $('#peek');
-  list.addEventListener('mousemove', e => { peek.style.left = e.clientX + 'px'; peek.style.top = e.clientY + 'px'; });
-  $$('#list a').forEach(a => {
-    a.onmouseenter = () => { peek.innerHTML = art(PROJECTS[a.dataset.i]); peek.classList.add('on'); };
-    a.onmouseleave = () => peek.classList.remove('on');
-  });
 }
 
 if (page === 'project') {
