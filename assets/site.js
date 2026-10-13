@@ -45,8 +45,32 @@ const MENU = [
     ['Automation', 'Resizing and versioning on autopilot', 'auto', 1]],
    ['Marketing services', 'p', 'content'], [['Campaign strategy', 'The plan and concept behind the launch', 'camp', 1]]],
 ];
+
+// ── single service pages (service.html?s=<slug>)
+const slugify = t => t.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
+const SVC = {
+  'Ad creative': [['Static and animated ads', 'Every size for Meta, Google, TikTok and YouTube', 'Fresh variations to test and refresh', 'Built to your brand and your offer'], 'sport'],
+  'Social media creative': [['Feed posts, stories and carousels', 'Matchday, launch and event templates', 'A steady weekly content calendar', 'Captions written to match'], 'sport'],
+  'Presentation design': [['Pitch and sales decks', 'Company and event profiles', 'Editable templates for your team', 'Charts and data made readable'], ''],
+  'Illustration design': [['Custom illustrations and characters', 'Poster and key-art illustration', 'Icons and spot graphics', 'Styles that fit your existing brand'], 'event'],
+  'eBooks and report design': [['Annual and impact reports', 'eBooks and guides', 'Long-form layouts that stay readable', 'Print-ready and digital versions'], ''],
+  'Print design': [['Posters, flyers and banners', 'Event signage and wayfinding', 'Brochures and menus', 'Print-ready files, checked'], 'event'],
+  'Packaging and merchandise design': [['Jerseys and team kits', 'Scarves, tees and fan merch', 'Packaging and labels', 'Mockups before anything is printed'], 'sport'],
+  'Motion design': [['Animated posts and reels', 'Kinetic type and logo animation', 'Countdown and announcement loops', 'LED and stage visuals'], 'event'],
+  'Video editing': [['Short-form reels and shorts', 'Promo and highlight edits', 'Cutdowns for every platform', 'Subtitles, music and finishing'], 'event'],
+  'Email creation': [['Newsletter and campaign emails', 'Reusable email templates', 'Mobile-first layouts', 'Copy and subject lines'], 'digital'],
+  'Web design': [['Websites and landing pages', 'Event and ticketing pages', 'Responsive, fast layouts', 'Hand-off ready for developers'], 'digital'],
+  'Design systems': [['Template libraries for your team', 'Social and print systems', 'Usage rules that stay simple', 'Files organised to last'], 'sport'],
+  'Product design': [['App and product screens', 'Clear user flows', 'Clickable prototypes', 'Specs your developers can use'], 'digital'],
+  'Copywriting': [['Headlines and taglines', 'Social captions and scripts', 'Website and email copy', 'Written in your voice'], ''],
+  'Immersive experiences': [['Stage and LED screen visuals', '3D scenes and moments', 'Event environments', 'Content timed to the show'], 'event'],
+  'AI-powered creative': [['Faster variations and resizes', 'AI-assisted concepts, finished by designers', 'Image generation done with care', 'Human review on everything'], ''],
+  'AI consulting': [['Where AI fits in your creative process', 'Tool setup and workflows', 'Team training sessions', 'Guidelines for safe use'], ''],
+  'Automation': [['Automatic resizing and versioning', 'Template-driven production', 'Batch exports for every platform', 'More output from the same team'], 'sport'],
+  'Campaign strategy': [['Launch and campaign planning', 'Concepts and key messages', 'Channel and content plans', 'Timelines your team can follow'], 'event'],
+};
 const svgI = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
-const mItem = ([t, d, ic, isNew]) => `<li><a href="services.html#${MENU_GROUP[t] || 'creative'}"><span><b>${t}${isNew ? ' <em>New</em>' : ''}</b><small>${d}</small></span>${svgI(ic)}</a></li>`;
+const mItem = ([t, d, ic, isNew]) => `<li><a href="service.html?s=${slugify(t)}"><span><b>${t}${isNew ? ' <em>New</em>' : ''}</b><small>${d}</small></span>${svgI(ic)}</a></li>`;
 const mHead = ([t, c, a]) => `<a class="mh mh-${c}" href="services.html#${a}">${t} <span aria-hidden="true">↗</span></a>`;
 const MENU_GROUP = {};
 // Services (mirrors superside.com's list, without branding and production services).
@@ -260,9 +284,38 @@ if (page === 'services') {
     return `<section class="split rule reveal" id="${key}" style="padding-block:clamp(56px,7vw,112px);align-items:start">
       <div class="card"><div class="thumb"><div class="art"><img src="assets/stock/s-${key}.jpg" alt="" width="900" height="1125" loading="lazy"></div></div></div>
       <div><h2 class="x" style="font-size:var(--t-head)">${t}.</h2><p class="v" style="font-size:var(--t-voice);color:var(--green);margin-top:8px">${v}</p>
-      <div class="tags mt">${list.map(x => `<span>${x}</span>`).join('')}</div></div></section>`; }).join('');
+      <div class="tags mt">${list.map(x => `<a href="service.html?s=${slugify(x)}">${x}</a>`).join('')}</div></div></section>`; }).join('');
   // headline dots for the injected h2s
   $$('#disciplines h2.x').forEach(h => h.innerHTML = h.innerHTML.replace(/\.$/, '<span class="dot">.</span>'));
+}
+
+
+if (page === 'service') {
+  const ALL = MENU.flatMap(col => col.filter((_, i) => i % 2).flat());
+  const q = new URLSearchParams(location.search).get('s');
+  const it = ALL.find(([t]) => slugify(t) === q) || ALL[0];
+  const [t, d, ic] = it, [gets, cat] = SVC[t] || [[], ''];
+  const grp = DISCIPLINES.find(([, , l]) => l.includes(t)) || DISCIPLINES[0], gkey = grp[0].split(' ')[0].toLowerCase();
+  document.title = `${t} | Jungle.`;
+  const real = PROJECTS.filter(p => p.img), work = (cat ? real.filter(p => p.cat === cat) : []).concat(real).filter((p, i, a) => a.indexOf(p) === i).slice(0, 3);
+  const others = grp[2].filter(x => x !== t);
+  $('#svc').innerHTML = `
+  <header class="ph sv-hero">
+    <div><p class="sv-crumb"><a href="services.html">Services</a> / <a href="services.html#${gkey}">${grp[0]}</a></p>
+      <h1 class="x words">${t}</h1><p class="lead" style="margin-top:20px">${d}. ${grp[1]}</p>
+      <div class="hero-ctas" style="margin-top:32px"><a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a><a class="chip chip-lg" href="#sv-work">See related work</a></div></div>
+    <figure class="sv-img"><img src="assets/stock/s-${gkey}.jpg" alt="" width="900" height="1125"><span class="sv-ic">${svgI(ic)}</span></figure>
+  </header>
+  <section class="inv pad sec"><h2 class="x reveal" style="font-size:var(--t-head)">What you get.</h2>
+    <div class="sv-gets">${gets.map((g, i) => `<div class="reveal"><b class="n">${String(i + 1).padStart(2, '0')}</b><p>${g}</p></div>`).join('')}</div></section>
+  <section class="inv pad sec" style="padding-top:0"><h2 class="x reveal" style="font-size:var(--t-head)">How it works.</h2>
+    <div class="steps mt">${[['Brief', 'Tell us what you need and when, in plain words.'], ['Direction', 'We share a route built on your brand.'], ['Production', 'Every format you need, with clear feedback rounds.'], ['Delivery', 'Organised files, on the agreed date.']].map(([a, b], i) => `<div class="step reveal"><b class="n">${i + 1}</b><div><h3 class="w">${a}</h3><p>${b}</p></div></div>`).join('')}</div></section>
+  <section class="pad sec" id="sv-work"><h2 class="x reveal" style="font-size:var(--t-head)">Related work.</h2>
+    <div class="grid mt" style="padding:0">${work.map(card).join('')}</div></section>
+  ${others.length ? `<section class="pad sec" style="padding-top:0"><h2 class="x reveal" style="font-size:var(--t-head)">More in ${grp[0]}.</h2>
+    <div class="tags mt">${others.map(x => `<a href="service.html?s=${slugify(x)}">${x}</a>`).join('')}</div></section>` : ''}`;
+  $$('#svc h1.x, #svc h2.x').forEach(h => { if (!h.querySelector('.dot')) h.innerHTML = h.innerHTML.replace(/\.?$/, '<span class="dot">.</span>'); });
+  $$('#svc .words').forEach(h => { let k = 0; h.innerHTML = h.innerHTML.replace(/(<span class="dot">.*?<\/span>)|([^\s<]+)/g, (m, dd, w) => dd || `<span class="wd" style="--i:${k++}">${w}</span>`); h.classList.add('rise'); });
 }
 
 if (page === 'work') {

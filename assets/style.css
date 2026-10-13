@@ -360,3 +360,19 @@ nav::after{display:none}
   nav{top:0;left:0;right:0;height:64px;padding:0 var(--gut);border-radius:0}
   nav .links{top:64px;left:0;right:0;height:calc(100dvh - 64px);border-radius:0;border:0}
 }
+/* single service page */
+.sv-hero{grid-template-columns:minmax(0,1.2fr) minmax(0,1fr);align-items:center;gap:clamp(32px,5vw,96px);display:grid}
+.sv-crumb{color:var(--smoke);font-size:14px;margin-bottom:20px} .sv-crumb a:hover{color:var(--paper)}
+.sv-img{position:relative;margin:0;border-radius:var(--r);overflow:hidden;aspect-ratio:4/4.6}
+.sv-img img{width:100%;height:100%;object-fit:cover}
+.sv-ic{position:absolute;left:20px;bottom:20px;width:64px;height:64px;border-radius:16px;background:var(--green);color:var(--ink);display:grid;place-items:center;transform:rotate(-10deg)}
+.sv-ic svg{width:30px;height:30px}
+.sv-gets{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin-top:48px}
+.sv-gets>div{background:var(--mist);border-radius:var(--r);padding:28px;min-height:200px;display:flex;flex-direction:column;justify-content:space-between;transition:background .3s,transform .4s var(--ease)}
+.sv-gets>div:hover{background:var(--green);transform:translateY(-4px)}
+.sv-gets .n{font-size:40px}
+.sv-gets p{font-size:18px;line-height:1.35}
+.tags a{border:1px solid #444;border-radius:99px;padding:8px 14px;font-size:14px;transition:background .3s,color .3s,border-color .3s}
+.tags a:hover{background:var(--green);color:var(--ink);border-color:var(--green)}
+@media(max-width:900px){.sv-hero{grid-template-columns:1fr}.sv-gets{grid-template-columns:1fr 1fr}}
+@media(max-width:560px){.sv-gets{grid-template-columns:1fr}}
