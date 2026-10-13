@@ -1,56 +1,71 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Jungle | Design for brands, stages and stadiums</title>
-<meta name="description" content="Jungle is a design studio for digital marketing, events and concerts, and sports. Posters, key art, kits and campaigns.">
-<link rel="icon" href="assets/logo.svg">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/style.css"><link rel="stylesheet" href="assets/home.css"></head>
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="assets/j-mark.svg">
+<link rel="preload" href="assets/fonts/Agrandir-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assets/fonts/Aileron-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+<title>Jungle. Creative work, with more life.</title>
+<meta name="description" content="Jungle is a design-led creative agency. Graphic design, motion design and video editing for brands and marketing teams.">
+<link rel="stylesheet" href="assets/home.css"></head>
 <body data-page="home">
 <main>
-
-  <!-- HERO: the work is the first thing you see -->
   <section class="hero pad">
-    <div>
-      <h1 class="x rise">We design for <span class="out">the crowd.</span></h1>
-      <p class="hero-sub rise" style="--d:2">Posters, key art, kits and campaigns for digital brands, live events and sports teams.</p>
-      <div class="hero-ctas rise" style="--d:3">
-        <a class="btn" href="#work">See the work <span>→</span></a>
-        <a class="chip" href="contact.html">Start a project</a>
+    <div class="hero-copy">
+      <h1 class="x words">Creative work, with more life.</h1>
+      <p class="v rise" style="--d:5">Serious craft. Playful minds.</p>
+      <p class="lead rise" style="--d:6">Jungle helps brands and marketing teams bring ideas to life through graphic design, motion and video.</p>
+      <div class="hero-ctas rise" style="--d:7">
+        <a class="btn" href="#work">See the work <span aria-hidden="true">→</span></a>
+        <a class="chip chip-lg" href="contact.html">Start a project</a>
       </div>
     </div>
-    <div class="wall rise" id="wall" style="--d:2" aria-label="Project wall"></div>
+    <div class="wall-wrap rise" style="--d:3">
+      <span class="sticker">New work</span>
+      <div class="wall" id="wall" aria-hidden="true"></div>
+    </div>
   </section>
 
-  <!-- CLIENTS -->
   <section class="logos" aria-label="Clients"><div class="logo-track" id="logos"></div></section>
 
-  <!-- SELECTED WORK: pinned horizontal pan -->
   <section class="pan" id="work" aria-label="Selected work">
     <div class="pan-sticky">
       <div class="pan-track" id="pan">
         <div class="pan-intro">
-          <h2 class="x">Selected <span class="out">work</span></h2>
-          <p>Six recent projects across the feed, the stage and the stadium.</p>
+          <h2 class="x">Selected work.</h2>
+          <p>Recent projects for clubs, tours, festivals and brands.</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- DISCIPLINES -->
-  <section class="arenas pad sec">
-    <h2 class="x reveal">Three arenas, <span class="out">one studio.</span></h2>
-    <div class="acc" id="acc"></div>
+  <section class="disc inv slant-top pad sec" id="services">
+    <div class="disc-head">
+      <div class="reveal">
+        <h2 class="x">Three disciplines, one partner.</h2>
+        <p class="lead">Graphic design creates the visual communication. Motion brings it into movement. Video editing shapes it into finished stories.</p>
+      </div>
+      <div class="engage reveal">
+        <span class="label">How clients work with us</span>
+        <ul><li>Project-based work</li><li>Ongoing creative support</li><li>Campaign production</li></ul>
+      </div>
+    </div>
+    <div class="drows" id="drows"></div>
   </section>
 
-  <!-- PROOF (figures are sample data: replace with real results) -->
+  <section class="band on-green">
+    <p class="reveal">Your team has the brief. We've got the creative<span class="dot">.</span></p>
+  </section>
+
+  <!-- Figures are sample data: replace with real numbers before launch. -->
   <section class="proof pad sec">
-    <h2 class="x reveal">Work that <span class="out">sells.</span></h2>
+    <h2 class="x reveal">The work so far.</h2>
     <div class="bento">
-      <div class="b-stat reveal"><div class="art bg-img" style="background-image:url(assets/work/janakpur-bolts/cover.jpg)"></div><b data-n="240" data-s="+">0</b><p>Projects shipped since 2020</p></div>
-      <div class="b-stat reveal"><b data-n="60" data-s="+">0</b><p>Concerts, tours and festivals branded</p></div>
-      <div class="b-stat reveal"><b data-n="18">0</b><p>Clubs and leagues on the roster</p></div>
-      <div class="b-stat reveal"><div class="art a8"></div><b>0</b><p>Missed show dates</p></div>
+      <div class="b-stat reveal"><div class="bg-img" style="background-image:url(assets/work/janakpur-bolts/cover.jpg)"></div><b class="n" data-n="240" data-s="+">0</b><p>Projects delivered since 2020</p></div>
+      <div class="b-stat reveal"><b class="n" data-n="60" data-s="+">0</b><p>Concerts, tours and festivals</p></div>
+      <div class="b-stat reveal"><b class="n" data-n="18">0</b><p>Clubs and leagues</p></div>
+      <div class="b-stat g reveal"><b class="n">0</b><p>Missed deadlines</p></div>
     </div>
   </section>
-
 </main>
 <script src="assets/data.js"></script><script src="assets/work/manifest.js?v=1791388775"></script><script src="assets/site.js"></script></body></html>

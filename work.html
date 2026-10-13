@@ -1,13 +1,23 @@
 <!doctype html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Work — Jungle</title><meta name="description" content="Jungle — design studio for digital, event & concert, and sports marketing.">
-<link rel="icon" href="assets/logo.svg"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=Libre+Caslon+Display&family=Libre+Caslon+Text:ital@1&display=swap" rel="stylesheet"><link rel="stylesheet" href="assets/style.css"></head>
+<meta name="theme-color" content="#1A1A1A">
+<link rel="icon" href="assets/j-mark.svg">
+<link rel="preload" href="assets/fonts/Agrandir-Regular.otf" as="font" type="font/otf" crossorigin>
+<link rel="preload" href="assets/fonts/Aileron-Regular.ttf" as="font" type="font/ttf" crossorigin>
+<link rel="stylesheet" href="assets/style.css">
+<title>Work | Jungle.</title>
+<meta name="description" content="Jungle is a design-led creative agency. Graphic design, motion design and video editing for brands and marketing teams.">
+</head>
 <body data-page="work">
-<header class="ph"><h1 class="x">All <span class="out">Work</span></h1>
-  <div class="intro"><div class="chips"><button class="chip" data-f="all">All</button><button class="chip" data-f="digital">Digital</button><button class="chip" data-f="event">Event & Concert</button><button class="chip" data-f="sport">Sports</button></div>
-  <div class="chips"><button class="chip on" data-v="grid">Grid</button><button class="chip" data-v="list">List</button></div></div></header>
+<header class="ph">
+  <h1 class="x words">The work.</h1>
+  <div class="intro">
+    <div class="chips" role="group" aria-label="Filter by industry"><button class="chip" data-f="all">All</button><button class="chip" data-f="digital">Digital</button><button class="chip" data-f="event">Events and concerts</button><button class="chip" data-f="sport">Sports</button></div>
+    <div class="chips" role="group" aria-label="View"><button class="chip on" data-v="grid">Grid</button><button class="chip" data-v="list">List</button></div>
+  </div>
+</header>
 <div class="grid" id="grid"></div>
-<div class="list" id="list" style="display:none"></div>
-<div id="peek"></div>
-<div style="height:120px"></div>
+<div class="list" id="list" hidden></div>
+<div id="peek" aria-hidden="true"></div>
+<div style="height:clamp(88px,10vw,160px)"></div>
 <script src="assets/data.js"></script><script src="assets/work/manifest.js?v=1791388775"></script><script src="assets/site.js"></script></body></html>

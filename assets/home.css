@@ -1,113 +1,120 @@
 /* ── HOME ─────────────────────────────────────────────
-   Flow: work-first hero reel → clients → pinned horizontal work pan
-         → disciplines (expanding panels) → proof bento → footer CTA (single theme flip)
-   Radius rule: media 6px · glass surfaces 16px · controls pill.               */
+   Flow (work-first): hero + drifting project wall → clients → selected work (pinned pan)
+        → three disciplines on Paper, entered through the 10° slant → the partnership line on Green
+        → numbers → footer CTA on Paper.  One sticker on this layout: "New work" on the wall.        */
 
-/* entrance (fires on body.go, after the preloader) */
-.rise{opacity:0;transform:translateY(40px);transition:opacity 1s var(--ease),transform 1s var(--ease);transition-delay:calc(var(--d,0) * 90ms)}
+.rise{opacity:0;transform:translateY(28px);transition:opacity .6s var(--ease),transform .6s var(--ease);transition-delay:calc(var(--d,0) * 90ms)}
 body.go .rise{opacity:1;transform:none}
 
 /* HERO */
-.hero{min-height:100dvh;display:grid;grid-template-columns:1.2fr 1fr;gap:clamp(24px,5vw,80px);align-items:center;padding-top:96px;padding-bottom:48px}
-.hero h1{font-size:clamp(52px,7.2vw,132px);line-height:.95;padding-bottom:.1em}
-.hero-sub{max-width:36ch;font-size:clamp(18px,1.45vw,22px);line-height:1.4;margin:24px 0 36px;color:rgba(244,243,239,.78)}
-.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;align-items:center}
-.hero-ctas .chip{padding:20px 30px;font-size:13px;white-space:nowrap}
-.btn{white-space:nowrap}
+.hero{position:relative;min-height:100dvh;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);gap:clamp(24px,4vw,72px);align-items:center;padding-top:72px;overflow:hidden}
+.hero h1{font-size:clamp(52px,7vw,128px);line-height:1.0;max-width:10ch}
+.hero .v{font-size:var(--t-voice);color:var(--green);margin-top:24px}
+.hero .lead{margin-top:20px;max-width:40ch}
+.hero-ctas{display:flex;gap:12px;flex-wrap:wrap;margin-top:40px}
+.hero-copy{padding-block:48px}
 
-/* project wall (after superside.com) */
-.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;height:100dvh;margin-block:-96px -48px;overflow:hidden;
-  mask-image:linear-gradient(transparent,#000 12%,#000 88%,transparent)}
+/* project wall (after superside.com): 3 columns drifting ~25px/s, neighbours opposite */
+.wall-wrap{position:relative;align-self:stretch}
+.wall{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;height:100dvh;margin-top:-72px;overflow:hidden;
+  mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
 .wcol{overflow:hidden}
-.wtrack{display:flex;flex-direction:column;gap:16px;animation:wall 40s linear infinite}
+.wtrack{display:flex;flex-direction:column;gap:14px;animation:wall 40s linear infinite}
 .wcol.down .wtrack{animation-direction:reverse}
 .wall:hover .wtrack{animation-play-state:paused}
-@keyframes wall{to{transform:translateY(calc(-50% - 8px))}}
-.tile{position:relative;display:block;aspect-ratio:.68;border-radius:10px;overflow:hidden;background:#151515}
+@keyframes wall{to{transform:translateY(calc(-50% - 7px))}}
+.tile{position:relative;display:block;aspect-ratio:.68;border-radius:var(--r);overflow:hidden;background:var(--ink-2)}
 .tile.tall{aspect-ratio:.52}
-.tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s cubic-bezier(.4,0,.2,1)}
+.tile img{width:100%;height:100%;object-fit:cover;transition:transform .5s var(--ease)}
 .tile:hover img{transform:scale(1.05)}
-.tile .label{position:absolute;left:10px;bottom:10px;padding:6px 10px;border-radius:99px;background:rgba(10,10,10,.5);
-  -webkit-backdrop-filter:blur(12px);backdrop-filter:blur(12px);color:#fff;opacity:0;transform:translateY(6px);transition:.4s cubic-bezier(.4,0,.2,1)}
-.tile:hover .label{opacity:1;transform:none}
+.tile span{position:absolute;inset:auto 0 0 0;padding:28px 14px 12px;background:var(--green);color:var(--ink);font-size:14px;line-height:1.2;
+  clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%);transition:clip-path .4s var(--ease)}
+.tile:hover span{clip-path:polygon(0 18px,100% 0,100% 100%,0 100%)}
+.wall-wrap .sticker{left:-14px;top:30%}
 
-/* CLIENT MARKS (the page's one marquee) */
-.logos{border-block:1px solid rgba(244,243,239,.14);overflow:hidden;padding:28px 0;
-  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
-.logo-track{display:flex;gap:64px;width:max-content;animation:slide 40s linear infinite}
+/* CLIENTS (the page's one marquee) */
+.logos{border-block:1px solid #2a2a2a;overflow:hidden;padding:26px 0;
+  mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 10%,#000 90%,transparent)}
+.logo-track{display:flex;gap:56px;width:max-content;animation:slide 50s linear infinite}
 .logos:hover .logo-track{animation-play-state:paused}
-.mark{display:flex;align-items:center;gap:12px;font-weight:700;font-size:15px;letter-spacing:-.01em;opacity:.7;white-space:nowrap;transition:opacity .3s}
-.mark:hover{opacity:1}
-.mark svg{width:36px;height:36px}
+.mark{display:flex;align-items:center;gap:12px;font-size:15px;color:var(--smoke);white-space:nowrap;transition:color .3s}
+.mark:hover{color:var(--paper)}
+.mark svg{width:34px;height:34px}
 
-/* PINNED HORIZONTAL WORK PAN */
+/* SELECTED WORK: pinned horizontal pan (CSS scroll-driven; JS measures distance) */
 .pan{position:relative;height:calc(100dvh + var(--len,2000px));view-timeline-name:--pan}
 .pan-sticky{position:sticky;top:0;height:100dvh;overflow:hidden;display:flex;align-items:center}
-.pan-track{display:flex;gap:clamp(16px,2.4vw,40px);align-items:flex-end;padding:0 var(--gut);will-change:transform;
+.pan-track{display:flex;gap:clamp(16px,2vw,32px);align-items:flex-end;padding:72px var(--gut) 0;will-change:transform;
   animation:pan linear both;animation-timeline:--pan;animation-range:contain 0% contain 100%}
 @keyframes pan{to{transform:translateX(calc(-1 * var(--dist,0px)))}}
-.pan-intro{flex:0 0 clamp(280px,30vw,480px);align-self:center}
-.pan-intro h2{font-size:var(--head);line-height:.95;padding-bottom:.1em}
-.pan-intro p{max-width:30ch;margin-top:20px;color:rgba(244,243,239,.72)}
-.pan-card{flex:0 0 auto;width:clamp(240px,27vw,430px)}
-.pan-card:nth-of-type(even){margin-bottom:12vh}
-.pan-img{position:relative;aspect-ratio:4/5;border-radius:6px;overflow:hidden}
-.pan-img .art{transition:transform 1s var(--ease)}
-.pan-card:hover .pan-img .art{transform:scale(1.05)}
+.pan-intro{flex:0 0 clamp(280px,28vw,460px);align-self:center}
+.pan-intro h2{font-size:var(--t-head)}
+.pan-intro p{max-width:30ch;margin-top:20px;color:var(--smoke)}
+.pan-card{flex:0 0 auto;width:clamp(240px,26vw,420px)}
+.pan-card:nth-of-type(even){margin-bottom:10vh}
+.pan-img{position:relative;aspect-ratio:4/5;border-radius:var(--r);overflow:hidden}
+.pan-img .art{transition:transform .6s var(--ease)}
+.pan-card:hover .pan-img .art{transform:scale(1.04)}
 .pan-card .cap{display:flex;justify-content:space-between;align-items:baseline;gap:12px;padding-top:16px}
-.pan-card .cap h3{font-size:clamp(18px,1.5vw,24px)}
-.pan-card .cap .label{opacity:.6}
-.pan-end{flex:0 0 clamp(240px,24vw,380px);aspect-ratio:4/5;border:1.5px solid rgba(244,243,239,.3);border-radius:6px;display:flex;flex-direction:column;justify-content:space-between;padding:28px;transition:background .5s var(--ease),color .5s var(--ease)}
-.pan-end .x{font-size:clamp(40px,4vw,72px);line-height:.95}
-.pan-end:hover{background:var(--paper);color:var(--ink)}
+.pan-card .cap h3{font-size:clamp(20px,1.6vw,26px)}
+.pan-card .cap p{color:var(--smoke);font-size:14px}
+.pan-end{flex:0 0 clamp(240px,24vw,380px);aspect-ratio:4/5;border-radius:var(--r);background:var(--green);color:var(--ink);display:flex;flex-direction:column;justify-content:space-between;padding:28px;transition:transform .45s var(--ease)}
+.pan-end:hover{transform:rotate(-2deg)}
+.pan-end .x{font-size:clamp(36px,3.6vw,64px)}
 @supports not (animation-timeline:view()){
   .pan{height:auto}.pan-sticky{position:static;height:auto;overflow-x:auto;scroll-snap-type:x mandatory;padding-block:96px}
   .pan-track{animation:none}.pan-card,.pan-end{scroll-snap-align:start}}
 
-/* DISCIPLINES: expanding panels */
-.arenas h2{font-size:var(--head);line-height:.95;padding-bottom:.1em;max-width:14ch}
-.acc{display:flex;gap:8px;height:min(74dvh,660px);margin-top:56px}
-.panel{position:relative;flex:1;min-width:0;overflow:hidden;border-radius:6px;transition:flex .8s var(--ease)}
-.panel.open{flex:2.4}
-.panel>.art{filter:brightness(.45);transition:filter .8s var(--ease),transform 1.2s var(--ease)}
-.panel.open>.art{filter:brightness(.75);transform:scale(1.04)}
-.panel-body{position:absolute;left:12px;right:12px;bottom:12px;padding:24px;border-radius:16px;background:rgba(10,10,10,.34);
-  -webkit-backdrop-filter:blur(18px) saturate(170%);backdrop-filter:blur(18px) saturate(170%);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.28),inset 0 0 0 1px rgba(255,255,255,.12);color:#fff}
-.panel-body h3{font-size:clamp(26px,2.6vw,44px);line-height:1;padding-bottom:.08em}
-.panel-more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .8s var(--ease),opacity .5s}
-.panel-more>*{min-height:0;overflow:hidden}
-.panel.open .panel-more{grid-template-rows:1fr;opacity:1}
-.panel-more{gap:16px}
-.panel-more p{margin-top:12px;max-width:38ch;color:rgba(255,255,255,.8)}
-.panel .tags span{font-size:12px;padding:6px 12px;border-color:rgba(255,255,255,.4)}
+/* DISCIPLINES on Paper, entered through the slant */
+.disc h2{font-size:var(--t-head);max-width:12ch}
+.disc .lead{margin-top:20px}
+.disc-head{display:grid;grid-template-columns:minmax(0,1.3fr) minmax(0,1fr);gap:40px;align-items:end}
+.engage{background:var(--ink);color:var(--paper);border-radius:var(--r);padding:28px}
+.engage .label{color:var(--green)}
+.engage ul{list-style:none;margin-top:12px;font-size:16px;line-height:1.8}
+.drows{margin-top:clamp(48px,6vw,88px)}
+.drow{position:relative;display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,1fr) auto;gap:32px;align-items:center;padding:clamp(28px,3vw,44px) clamp(20px,2vw,32px);
+  border-top:1px solid var(--mist);isolation:isolate;transition:color .4s var(--ease)}
+.drow:last-child{border-bottom:1px solid var(--mist)}
+.drow::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:var(--r);background:var(--ink);
+  clip-path:polygon(0 100%,0 100%,0 100%,0 100%);transition:clip-path .55s var(--ease)}
+.drow:hover{color:var(--paper)}
+.drow:hover::before{clip-path:polygon(0 0,100% 0,100% 100%,0 100%)}
+.drow h3{font-size:clamp(32px,3.6vw,60px)}
+.drow .v{font-size:var(--t-voice);color:var(--stone);margin-top:6px;transition:color .4s}
+.drow:hover .v{color:var(--green)}
+.drow ul{list-style:none;color:var(--stone);line-height:1.8;transition:color .4s}
+.drow:hover ul{color:var(--smoke)}
+.drow .go{width:56px;height:56px;border-radius:50%;border:1px solid #d4d4d4;display:grid;place-items:center;transition:background .4s,border-color .4s,transform .4s var(--ease)}
+.drow .go svg{width:20px;height:20px}
+.drow:hover .go{background:var(--green);border-color:var(--green);color:var(--ink);transform:rotate(-10deg)}
+.disc-note{margin-top:28px;color:var(--stone);font-size:15px}
 
-/* PROOF: 4 stat tiles (testimonial removed for now; .b-quote styles kept for later) */
-.proof h2{font-size:var(--head);line-height:.95;padding-bottom:.1em;max-width:16ch}
-.bento{display:grid;grid-template-columns:repeat(4,1fr);grid-auto-rows:minmax(300px,auto);gap:8px;margin-top:56px}
-.bento>*{position:relative;overflow:hidden;border-radius:6px;border:1px solid rgba(244,243,239,.16);padding:28px;display:flex;flex-direction:column;justify-content:space-between}
-.b-quote{grid-column:span 2;grid-row:span 2;background:var(--paper);color:var(--ink);border:0}
-.b-quote blockquote{font-family:"Libre Caslon Display",serif;font-size:clamp(26px,2.7vw,44px);line-height:1.12;letter-spacing:-.02em}
-.b-quote figcaption b{display:block;font-weight:700}
-.b-quote figcaption span{opacity:.65;font-size:15px}
-.b-stat b{font-family:"Libre Caslon Display",serif;font-weight:400;font-size:clamp(48px,5vw,84px);line-height:.9;letter-spacing:-.04em}
-.b-stat p{max-width:22ch;color:rgba(244,243,239,.75)}
-.b-stat .art{opacity:.22;z-index:-1}
-.b-stat{isolation:isolate}
+/* PARTNERSHIP LINE on Green */
+.band{padding:clamp(88px,10vw,150px) var(--gut)}
+.band p{font:400 clamp(40px,5.6vw,104px)/1.02 "PP Agrandir",sans-serif;letter-spacing:-.025em;max-width:15ch;text-wrap:balance}
+
+/* NUMBERS (sample figures: replace with real ones) */
+.proof h2{font-size:var(--t-head);max-width:14ch}
+.bento{display:grid;grid-template-columns:repeat(4,1fr);gap:12px;margin-top:56px}
+.b-stat{position:relative;overflow:hidden;isolation:isolate;border-radius:var(--r);background:var(--ink-2);padding:28px;min-height:300px;display:flex;flex-direction:column;justify-content:space-between}
+.b-stat .n{font-size:var(--t-num)}
+.b-stat p{color:var(--smoke);max-width:22ch}
+.b-stat .bg-img{position:absolute;inset:0;z-index:-1;background-size:cover;background-position:center;opacity:.3;filter:grayscale(1)}
+.b-stat.g{background:var(--green);color:var(--ink)} .b-stat.g p{color:var(--ink)}
 
 @media(max-width:900px){
-  .hero{grid-template-columns:1fr;min-height:auto;padding-top:112px}
-  .wall{height:70dvh;margin:0}
+  .hero{grid-template-columns:1fr;min-height:auto;padding-top:120px}
+  .hero-copy{padding-block:0}
+  .wall{height:72dvh;margin:0}
+  .wall-wrap .sticker{left:auto;right:12px;top:-16px}
+  .disc-head{grid-template-columns:1fr}
+  .drow{grid-template-columns:1fr auto}
+  .drow ul{display:none}
   .bento{grid-template-columns:1fr 1fr}
-  .acc{flex-direction:column;height:auto}
-  .panel,.panel.open{flex:none;height:440px}
-  .panel .panel-more{grid-template-rows:1fr;opacity:1}
 }
-@media(max-width:560px){.b-quote{grid-column:span 2}.bento{grid-auto-rows:minmax(200px,auto)}}
 @media(prefers-reduced-motion:reduce){
-  .wtrack{animation:none}
   .rise{opacity:1;transform:none}
+  .wtrack,.logo-track{animation:none}
   .pan{height:auto}.pan-sticky{position:static;height:auto;overflow-x:auto;padding-block:96px}.pan-track{animation:none}
-  .logo-track{animation:none;flex-wrap:wrap;width:auto;justify-content:center}
 }
-.b-stat .bg-img{background-size:cover;background-position:center;opacity:.35;filter:grayscale(1)}
