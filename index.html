@@ -5,19 +5,20 @@
 <link rel="preload" href="assets/fonts/Agrandir-Regular.otf" as="font" type="font/otf" crossorigin>
 <link rel="preload" href="assets/fonts/Aileron-Regular.ttf" as="font" type="font/ttf" crossorigin>
 <link rel="stylesheet" href="assets/style.css">
-<title>Jungle. Creative work, with more life.</title>
+<title>Jungle. Your team’s creative team.</title>
 <meta name="description" content="Jungle is a design-led creative agency: ad creative, social, motion, web, copy and AI services for brands and marketing teams.">
 <link rel="stylesheet" href="assets/home.css"></head>
 <body data-page="home">
 <main>
+  <!-- 1 HERO -->
   <section class="hero pad">
     <div class="hero-copy">
-      <h1 class="x words">Creative work, with more life.</h1>
+      <h1 class="x words">Your team’s creative team.</h1>
       <p class="v rise" style="--d:5">Serious craft. Playful minds.</p>
-      <p class="lead rise" style="--d:6">Jungle helps brands and marketing teams bring ideas to life through graphic design, motion and video.</p>
+      <p class="lead rise" style="--d:6">Jungle helps brands and marketing teams bring ideas to life through design, motion, video and more.</p>
       <div class="hero-ctas rise" style="--d:7">
-        <a class="btn" href="#work">See the work <span aria-hidden="true">→</span></a>
-        <a class="chip chip-lg" href="contact.html">Start a project</a>
+        <a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a>
+        <a class="chip chip-lg" href="#work">See the work</a>
       </div>
     </div>
     <div class="wall-wrap rise" style="--d:3">
@@ -26,35 +27,69 @@
     </div>
   </section>
 
-  <section class="logos" aria-label="Clients"><div class="logo-track" id="logos"></div></section>
+  <!-- 2 CLIENTS -->
+  <section class="inv clients-strip" aria-labelledby="cl-h">
+    <p class="cl-h" id="cl-h">Creative support for clubs, tours, festivals and brands</p>
+    <div class="logos"><div class="logo-track" id="logos"></div></div>
+  </section>
 
-  <section class="pan" id="work" aria-label="Selected work">
-    <div class="pan-sticky">
-      <div class="pan-track" id="pan">
-        <div class="pan-intro">
-          <h2 class="x">Selected work.</h2>
-          <p>Recent projects for clubs, tours, festivals and brands.</p>
-        </div>
-      </div>
+  <!-- 3 CRAFT + AI -->
+  <section class="inv pad sec split2">
+    <div class="s2-copy reveal">
+      <h2 class="x">Craft first. Faster with AI.</h2>
+      <p class="s2-sub">What happens when good designers get better tools?</p>
+      <p class="muted">We use AI where it saves time, in resizing, versioning and first drafts, so our designers spend their hours on the idea and the details. You get sharper work, fewer review rounds and the same eye for craft.</p>
+      <a class="btn" href="services.html#ai">How we use AI <span aria-hidden="true">→</span></a>
+    </div>
+    <figure class="s2-media reveal" id="m-ai"></figure>
+  </section>
+
+  <!-- 4 PARTNER -->
+  <section class="inv pad split2 rev" style="padding-bottom:clamp(88px,10vw,160px)">
+    <figure class="s2-media reveal" id="m-partner"><span class="sticker g" style="right:-10px;top:24px">Behind the scenes</span></figure>
+    <div class="s2-copy reveal">
+      <h2 class="x">The creative partner your team has been asking for.</h2>
+      <p class="s2-sub">Designers, motion artists, editors and writers with the skills to deliver across every channel and moment that matters.</p>
+      <p class="muted">Think of us as an extension of your team, so you can focus on the work only you can do.</p>
+      <a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a>
     </div>
   </section>
 
-  <section class="disc inv slant-top pad sec" id="services" aria-labelledby="svc-h">
-    <div class="disc-head reveal">
-      <h2 class="x" id="svc-h">Move fast with <span data-count>19</span> creative services, for every marketing team.</h2>
+  <!-- 5 THREE FEATURE CARDS -->
+  <section class="pad sec feat" aria-labelledby="ft-h">
+    <h2 class="x reveal" id="ft-h">Real designers. Smart systems. Made to keep up with you.</h2>
+    <div class="fcards" id="fcards"></div>
+  </section>
+
+  <!-- 6 NUMBERS (sample figures: replace with real ones before launch) -->
+  <section class="inv pad sec nums" aria-labelledby="nm-h">
+    <h2 class="x reveal" id="nm-h">The best return on your creative budget.</h2>
+    <div class="ngrid">
+      <div class="nrow reveal"><p>Brands, clubs and promoters have trusted Jungle with their creative.</p><b class="n" data-n="40" data-s="+">0</b></div>
+      <div class="nrow reveal"><p>Assets delivered across social, print, motion and video.</p><b class="n" data-n="2" data-s="k+">0</b></div>
+      <div class="nrow reveal"><p>Projects delivered on the agreed date.</p><b class="n" data-n="98" data-s="%">0</b></div>
+      <div class="nrow reveal"><p>Typical turnaround for social and campaign assets.</p><b class="n">48 hrs</b></div>
     </div>
+    <div class="stories" id="stories"></div>
+  </section>
+
+  <!-- 7 SERVICES FLOW -->
+  <section class="inv pad sec" id="services" aria-labelledby="svc-h">
+    <h2 class="x reveal flow-h" id="svc-h">Move fast with <span data-count>19</span> creative services, for every marketing team.</h2>
     <div class="flow" id="flow">
       <ul class="pills" id="pills" aria-label="Services"></ul>
       <div class="hub" aria-hidden="true"><span class="beam"></span><span class="jt"></span></div>
       <div class="teams" id="teams" aria-label="Teams we work with"><svg class="arrows" id="arrows" aria-hidden="true"></svg></div>
     </div>
-    <div class="cta-row" style="justify-content:center"><a class="btn" href="services.html">See every service <span aria-hidden="true">→</span></a></div>
   </section>
 
-  <section class="band on-green">
-    <p class="reveal">Your team has the brief. We've got the creative<span class="dot">.</span></p>
+  <!-- 8 OUR WORK -->
+  <section class="inv pad" id="work" aria-labelledby="wk-h" style="padding-bottom:clamp(88px,10vw,160px)">
+    <div class="sec-head"><h2 class="x reveal" id="wk-h">See how brands use Jungle.</h2><a class="chip chip-lg" href="work.html">Explore all our work</a></div>
+    <div class="wgrid" id="wgrid"></div>
   </section>
 
+  <!-- 9 COMPARISON -->
   <section class="vs pad sec" aria-labelledby="vs-h">
     <h2 class="x reveal" id="vs-h">In-house hire or big agency? Neither.</h2>
     <div class="vs-scroll">
@@ -65,19 +100,68 @@
     </div>
   </section>
 
-  <section class="cases pad sec" aria-labelledby="cases-h">
-    <div class="cases-head"><h2 class="x reveal" id="cases-h">How brands use Jungle.</h2><a class="chip chip-lg" href="work.html">All projects</a></div>
-    <div class="xcards" id="xcards"></div>
+  <!-- 10 WINS MARQUEE -->
+  <section class="inv sec wins" aria-labelledby="wn-h">
+    <h2 class="x reveal pad" id="wn-h">Creative wins, told by the work.</h2>
+    <div class="wrow" id="wrow1"></div>
+    <div class="wrow rev" id="wrow2"></div>
   </section>
 
-  <!-- Figures are sample data: replace with real numbers before launch. -->
-  <section class="proof pad sec">
-    <h2 class="x reveal">The work so far.</h2>
-    <div class="bento">
-      <div class="b-stat reveal"><div class="bg-img" style="background-image:url(assets/work/janakpur-bolts/cover.jpg)"></div><b class="n" data-n="240" data-s="+">0</b><p>Projects delivered since 2020</p></div>
-      <div class="b-stat reveal"><b class="n" data-n="60" data-s="+">0</b><p>Concerts, tours and festivals</p></div>
-      <div class="b-stat reveal"><b class="n" data-n="18">0</b><p>Clubs and leagues</p></div>
-      <div class="b-stat g reveal"><b class="n">0</b><p>Missed deadlines</p></div>
+  <!-- 11 BENTO -->
+  <section class="inv pad sec bento-sec" aria-labelledby="bt-h">
+    <div class="sec-head"><h2 class="x reveal" id="bt-h">One simple way of working, built for better creative.</h2>
+      <p class="muted reveal" style="max-width:36ch">Whatever you need, briefing us and getting work back is easy.</p></div>
+    <div class="bento2">
+      <div class="bx bx-tall reveal" id="bx-cmd">
+        <h3 class="w">Your creative, in one thread.</h3>
+        <div class="cmd" aria-hidden="true"><p class="cmd-hi">Let’s make that launch happen.</p><div class="cmd-in"><span id="typed"></span><i class="caret"></i><b aria-hidden="true">→</b></div></div>
+        <p class="bx-foot">Brief us in plain words. Every request, draft and file stays in one place, from first message to final delivery.</p>
+      </div>
+      <div class="bx bx-wide on-green reveal">
+        <div><h3 class="w">A process you can see.</h3><p>Clear steps, named owners and honest dates, so you always know where your work is.</p></div>
+        <ol class="steps2" id="steps2"><li>Brief received</li><li>Brand files checked</li><li>Designing</li><li>Delivered</li></ol>
+      </div>
+      <div class="bx bx-ink reveal">
+        <h3 class="w">Built on your brand.</h3><p>Your guidelines, past feedback and preferences shape every new piece.</p>
+        <div class="collage" id="collage"></div>
+      </div>
+      <div class="bx bx-mist reveal">
+        <h3 class="w">Works with your tools.</h3><p>Slack, WhatsApp, Drive, Figma or email. We fit how your team already works.</p>
+        <div class="tools"><span>Slack</span><span>Drive</span><span>Figma</span><i class="tj" id="tj"></i><span>Email</span><span>Asana</span><span>WhatsApp</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 OUR DIFFERENCE -->
+  <section class="inv pad sec diff" aria-labelledby="df-h">
+    <h2 class="x reveal" id="df-h">Built for teams that refuse to compromise.</h2>
+    <div class="dgrid">
+      <div class="reveal"><span class="di"><svg viewBox="0 0 24 24"><path d="M12 19l7-7 3 3-7 7-3-3zM18 13l-1.5-7.5L2 2l3.5 14.5L13 18l5-5zM2 2l7.586 7.586M11 11a2 2 0 1 0 0-4 2 2 0 0 0 0 4z"/></svg></span><p class="label">Scalable</p><h3 class="w">Boost your in-house team.</h3><p class="muted">We take on the production load so your team can focus on the big ideas, without adding headcount.</p></div>
+      <div class="reveal"><span class="di"><svg viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M4 6l1 1 2-2M4 12l1 1 2-2M4 18l1 1 2-2"/></svg></span><p class="label">Flexible</p><h3 class="w">Say yes to more projects.</h3><p class="muted">More bandwidth or a different skill, we flex with your calendar and your launches.</p></div>
+      <div class="reveal"><span class="di"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></span><p class="label">Responsive</p><h3 class="w">Don’t trade quality for speed.</h3><p class="muted">Quick turnarounds with the same attention to type, timing and detail.</p></div>
+      <div class="reveal"><span class="di"><svg viewBox="0 0 24 24"><path d="M3 12h4l3 8 4-16 3 8h4"/></svg></span><p class="label">Seamless</p><h3 class="w">One team, total clarity.</h3><p class="muted">Briefs, feedback, files and delivery in one place, with a clear owner on every project.</p></div>
+    </div>
+  </section>
+
+  <!-- 13 TALENT -->
+  <section class="talent">
+    <div class="tl-copy pad">
+      <h2 class="x reveal">Talent that sets a higher standard.</h2>
+      <p class="s2-sub reveal">Designers, motion artists, editors, writers and AI-trained creatives, working from Nepal for clients around the world.</p>
+      <p class="muted reveal">Every project has one person who owns it, keeps it on brief and on time, from first message to final file.</p>
+      <a class="btn reveal" href="contact.html">Meet the team <span aria-hidden="true">→</span></a>
+    </div>
+    <figure class="tl-media" id="m-talent"></figure>
+  </section>
+
+  <!-- 14 FINAL CTA -->
+  <section class="burn">
+    <figure class="bn-media" id="m-burn"></figure>
+    <div class="bn-copy on-green pad">
+      <h2 class="x reveal">Your team deserves better than burnout.</h2>
+      <p class="s2-sub reveal">In-house teams carry the brand, but endless requests and tight calendars wear even the best of them down.</p>
+      <p class="reveal">There’s a better way to lighten the load, and it isn’t another agency or a stack of freelancers.</p>
+      <a class="btn reveal" href="contact.html" style="background:var(--ink);color:var(--paper)">Start a project <span aria-hidden="true">→</span></a>
     </div>
   </section>
 </main>

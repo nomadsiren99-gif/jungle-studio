@@ -19,6 +19,7 @@ const card = p => `<a class="card reveal" data-c="${p.cat}" href="project.html?p
 
 // ── chrome
 document.body.insertAdjacentHTML('afterbegin', `
+<a class="skip" href="#main">Skip to content</a>
 <div id="curtain" aria-hidden="true">${LOGO.replace('<svg', '<svg class="jm"')}</div>
 <nav><a class="logo" href="index.html" aria-label="Jungle, home">${LOGO_NAV}</a>
   <button class="menu" aria-expanded="false" aria-controls="nav-links">Menu</button>
@@ -26,7 +27,7 @@ document.body.insertAdjacentHTML('afterbegin', `
     <a href="work.html" data-p="work">Work</a><a href="services.html" data-p="services">Services</a>
     <a href="contact.html" data-p="contact">Contact</a><a class="btn" href="contact.html">Start a project</a></div></nav>`);
 document.body.insertAdjacentHTML('beforeend', `
-<footer class="cta">${page === 'contact' ? '' : `
+<footer class="cta">${page === 'contact' || page === 'home' ? '' : `
   <p class="cta-line reveal">Good ideas deserve good execution<span class="dot">.</span></p>
   <div class="cta-row"><a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a>
   <a class="chip chip-lg" href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a></div>`}
@@ -36,6 +37,12 @@ document.body.insertAdjacentHTML('beforeend', `
     <div><span class="label">Follow</span><a href="https://instagram.com/jungledesigns">Instagram</a><a href="https://designbyjungle.com">designbyjungle.com</a></div>
     <div><span class="label">Say hello</span><a href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a><small>© 2026 Jungle.</small></div>
   </div></footer>`);
+{ const m = $('main') || $('.ph'); if (m && !m.id) m.id = 'main'; }
+// Long-running loops (wall, marquees) get a pause control.
+if ($('.wtrack, .logo-track, .wrow')) {
+  document.body.insertAdjacentHTML('beforeend', '<button class="motion-toggle" aria-pressed="false">Pause motion</button>');
+  const mt = $('.motion-toggle'); mt.onclick = () => { const s = document.body.classList.toggle('still'); mt.setAttribute('aria-pressed', s); mt.textContent = s ? 'Play motion' : 'Pause motion'; };
+}
 $$(`nav [data-p="${page}"]`).forEach(a => { a.classList.add('cur'); a.setAttribute('aria-current', 'page'); });
 const nav = $('nav'), menu = $('nav .menu');
 menu.onclick = () => { const o = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', o); menu.textContent = o ? 'Close' : 'Menu'; };
@@ -85,6 +92,11 @@ const DISCIPLINES = [
 const SERVICE_COUNT = DISCIPLINES.reduce((n, d) => n + d[2].length, 0);
 
 if (page === 'home') {
+  // Section order follows superside.com; every visual is Jungle's own work and brand system.
+  const real = PROJECTS.filter(p => p.img), by = slug => PROJECTS.find(p => p.slug === slug) || real[0];
+  const gal = (p, n) => (p.gallery && p.gallery[n]) || p.img;
+  const img = (src, alt = '') => `<img src="${src}" alt="${alt}" loading="lazy" decoding="async">`;
+
   // Hero wall (after superside.com): 3 columns drifting ~25px/s, neighbours opposite. Lists are doubled so -50% loops.
   const tiles = PROJECTS.filter(p => p.img).flatMap(p => [p.img, ...(p.gallery || []).slice(0, 3)].map(src => ({ p, src })));
   $('#wall').innerHTML = [0, 1, 2].map(c => {
@@ -100,15 +112,23 @@ if (page === 'home') {
   const clients = [...new Set(PROJECTS.map(p => p.client.split(',')[0].replace(/ (Live|Festival|Football Club|Streetwear|Records|Boxing Promotions|Network)$/, '')))];
   $('#logos').innerHTML = clients.map(mark).join('').repeat(2);
 
-  // Selected work: CSS scroll-driven pan; JS only measures the travel distance.
-  const feat = PROJECTS.slice(0, 6), pan = $('#pan');
-  pan.insertAdjacentHTML('beforeend', feat.map(p => `<a class="pan-card" href="project.html?p=${p.slug}">
-    <div class="pan-img">${art(p)}</div><div class="cap"><h3 class="w">${p.title}</h3><p>${sector(p)}</p></div></a>`).join('') +
-    `<a class="pan-end" href="work.html"><span class="x">All ${PROJECTS.length} projects</span><span>See the work ${ARROW.replace('<svg', '<svg width="20" height="20" style="vertical-align:middle"')}</span></a>`);
-  const measure = () => { const d = Math.max(0, pan.scrollWidth - innerWidth); pan.style.setProperty('--dist', d + 'px'); $('.pan').style.setProperty('--len', d + 'px'); };
-  measure(); addEventListener('resize', measure); document.fonts && document.fonts.ready.then(measure);
+  // Split media
+  $('#m-ai').insertAdjacentHTML('afterbegin', img(gal(by('glory-tour'), 0), 'Glory Tour poster'));
+  $('#m-partner').insertAdjacentHTML('afterbegin', img(gal(by('nepathya-auckland'), 0), 'Nepathya campaign') +
+    '<a class="play" href="work.html" aria-label="See the work"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></a>');
 
-  $$('[data-count]').forEach(e => e.textContent = SERVICE_COUNT);
+  // Three feature cards (hover reveals the detail)
+  const F = [
+    ['c-g', '<span class="v">Flexible</span> ways to work', 'Project by project, ongoing support or a full campaign. Change course as your plans do.', gal(by('lumbini-all-stars'), 0)],
+    ['c-i', 'Real designers, <span class="v">from Nepal</span>', 'A tight team of designers, motion artists and editors, working with brands around the world.', gal(by('1974-ad-tour'), 4)],
+    ['c-m', '<span class="v">AI-assisted</span> workflows', 'AI handles the repetitive parts, our people handle the idea and the finish.', gal(by('trn-fest'), 2)],
+  ];
+  $('#fcards').innerHTML = F.map(([c, t, d, src]) => `<article class="fcard ${c} reveal" tabindex="0"><div class="fm">${img(src)}</div><div class="fb"><h3 class="w">${t}</h3><p>${d}</p></div></article>`).join('');
+
+  // Two story cards
+  $('#stories').innerHTML = ['janakpur-bolts', 'nepathya-auckland'].map(slug => { const p = by(slug);
+    return `<a class="story reveal" href="project.html?p=${p.slug}">${img(p.img, p.title)}<div><span class="tag">Case study</span><q>${p.brief}</q></div><span class="go2">Read the story ${ARROW.replace('<svg', '<svg width="16" height="16"')}</span></a>`; }).join('');
+
   // Services flow (after superside.com): pills → beam → J. hub → arrows → teams.
   const thumbs = { 'Ad creative': 'nepathya-auckland', 'Motion design': 'trn-fest', 'Illustration design': '1974-ad-tour', 'Packaging and merchandise design': 'lumbini-all-stars', 'AI-powered creative': 'glory-tour', 'Social media creative': 'janakpur-bolts' };
   const cover = slug => (PROJECTS.find(p => p.slug === slug) || {}).img;
@@ -139,6 +159,10 @@ if (page === 'home') {
   const fio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fio.unobserve(e.target); } }), { threshold: .25 });
   fio.observe($('#flow'));
 
+  // Our work: mixed-size grid (big, small, small / small, small, big)
+  const W = real.slice(0, 6);
+  $('#wgrid').innerHTML = W.map((p, i) => `<a class="wk${i === 0 || i === 5 ? ' big' : ''} reveal" href="project.html?p=${p.slug}"><div class="wm">${img(p.img, p.title)}</div><h3 class="w">${p.title}</h3><p>${p.scope.slice(0, 3).join(', ')}</p></a>`).join('');
+
   // Comparison table: Jungle. vs the usual alternatives. Rows rise in; ticks draw themselves.
   const I = {
     hire: '<path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6"/>',
@@ -160,12 +184,26 @@ if (page === 'home') {
   const rio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), [...e.target.parentNode.children].indexOf(e.target) * 110); rio.unobserve(e.target); } }), { threshold: .4 });
   $$('#vs-body tr').forEach(tr => reduce ? tr.classList.add('in') : rio.observe(tr));
 
-  // Expanding case cards: hover (or focus) widens one, revealing the result.
-  const cases = PROJECTS.filter(p => p.img).slice(0, 4);
-  $('#xcards').innerHTML = cases.map((p, i) => `<a class="xcard${i ? '' : ' open'}" href="project.html?p=${p.slug}">${art(p)}
-    <div class="xc-body"><p class="xc-tag">${sector(p)}</p><h3 class="w">${p.title}</h3>
-    <div class="xc-more"><div><p>${p.result}</p><span>Read the case ${ARROW.replace('<svg', '<svg width="16" height="16"')}</span></div></div></div></a>`).join('');
-  $$('.xcard').forEach(c => { const open = () => $$('.xcard').forEach(x => x.classList.toggle('open', x === c)); c.onmouseenter = open; c.onfocus = open; });
+  // Wins: real results from the work, two rows drifting opposite ways (no invented quotes)
+  const win = p => `<a class="win" href="project.html?p=${p.slug}"><div class="who">${img(p.img)}<div><b>${p.title}</b><span>${p.client.split(',')[0]}</span></div></div><p>${p.result}</p><span class="lnk">${sector(p)}</span></a>`;
+  const half = Math.ceil(PROJECTS.length / 2), r1 = PROJECTS.slice(0, half).map(win).join(''), r2 = PROJECTS.slice(half).map(win).join('');
+  $('#wrow1').innerHTML = r1 + r1; $('#wrow2').innerHTML = r2 + r2;
+
+  // Bento: typed brief, stepping process, brand collage, tools hub
+  const typed = $('#typed'), lines = ['Can you make 12 matchday posts by Friday?', 'We need a 15s reel for the tour launch.', 'Resize our campaign for every format.'];
+  let li = 0, ci = 0;
+  const type = () => { const l = lines[li]; typed.textContent = l.slice(0, ++ci);
+    if (ci < l.length) setTimeout(type, 45); else setTimeout(() => { ci = 0; li = (li + 1) % lines.length; type(); }, 2200); };
+  reduce ? typed.textContent = lines[0] : type();
+  const st = $$('#steps2 li'); let k = 0;
+  const step = () => { st.forEach((x, i) => x.classList.toggle('on', i <= k)); k = (k + 1) % (st.length + 1); };
+  step(); if (!reduce) setInterval(step, 1100);
+  $('#collage').innerHTML = [gal(by('janakpur-bolts'), 0), gal(by('lumbini-all-stars'), 1), gal(by('trn-fest'), 11)].map(s => img(s)).join('');
+  $('#tj').innerHTML = `<span style="display:flex;align-items:flex-end;gap:3px;width:46%">${LOGO_NAV.split('<span')[0].replace('class="lj"', 'style="width:72%;height:auto;color:#fff"')}<i style="width:24%;aspect-ratio:1;border-radius:50%;background:var(--green);margin-bottom:6%"></i></span>`;
+
+  // Talent + final CTA media
+  $('#m-talent').innerHTML = `<div class="tl-grid">${real.slice(0, 6).map(p => img(gal(p, 3), p.title)).join('')}</div>`;
+  $('#m-burn').innerHTML = img(gal(by('lumbini-all-stars'), 14), 'Lumbini All Stars champions poster');
 }
 
 if (page === 'services') {
