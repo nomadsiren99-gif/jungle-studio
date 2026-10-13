@@ -463,3 +463,12 @@ body[data-page=clearing] .note{background:#262626;color:var(--paper)} body[data-
 .prose{max-width:68ch;margin:0 auto;font-size:clamp(18px,1.3vw,21px);line-height:1.7}
 .prose p+p{margin-top:1.2em}
 @media(max-width:900px){.notes-grid{grid-template-columns:1fr}}
+/* active menu item: green 10° slant bar instead of a dot */
+nav .links a.cur::before,.mega-btn.cur::before{display:none!important}
+nav .links a[data-p],nav .mega-btn{position:relative}
+nav .links a[data-p]::after,nav .mega-btn::after{content:"";position:absolute;left:0;right:0;bottom:-10px;height:6px;background:var(--green);
+  clip-path:polygon(0 100%,0 100%,0 100%,0 100%);transition:clip-path .45s var(--ease)}
+nav .links a.cur::after,nav .mega-btn.cur::after{clip-path:polygon(0 100%,100% 0,100% 100%,0 100%)}
+nav .links a[data-p]:hover::after,nav .mega-btn:hover::after{clip-path:polygon(0 100%,100% 0,100% 100%,0 100%);opacity:.5}
+nav .links a.cur:hover::after,nav .mega-btn.cur:hover::after{opacity:1}
+@media(max-width:760px){nav .links a[data-p]::after,nav .mega-btn::after{bottom:2px;width:40px;right:auto}}
