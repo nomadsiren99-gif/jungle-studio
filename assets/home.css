@@ -175,3 +175,52 @@ body.go .rise{opacity:1;transform:none}
   .xcard .xc-more{grid-template-rows:1fr;opacity:1}
   .xcard:not(.open) .art{filter:none}
 }
+
+/* SERVICES FLOW (after superside.com "20+ scalable creative services"):
+   service pills → green beam → J. hub → arrows → the teams we work with */
+.disc .disc-head{display:block;text-align:center}
+.disc h2{max-width:20ch;margin-inline:auto}
+.flow{position:relative;display:grid;grid-template-columns:minmax(0,1.25fr) 160px minmax(0,1fr);align-items:center;gap:clamp(16px,2vw,40px);margin:clamp(48px,6vw,96px) 0 clamp(40px,4vw,64px);
+  background:radial-gradient(60% 70% at 50% 50%,rgba(97,254,135,.30),transparent 70%)}
+.pills{list-style:none;display:flex;flex-wrap:wrap;gap:12px;position:relative;z-index:2}
+.pill{display:inline-flex;align-items:center;gap:12px;height:60px;padding:0 20px 0 20px;border-radius:14px;font:400 clamp(15px,1.15vw,18px)/1 Aileron,sans-serif;
+  opacity:0;transform:translateY(14px) scale(.96);transition:opacity .45s var(--ease),transform .45s var(--ease),box-shadow .3s;transition-delay:calc(var(--i) * 45ms);
+  box-shadow:inset 0 0 0 1px rgba(26,26,26,.06)}
+.pill.t{padding-left:6px}
+.pill img{width:48px;height:48px;border-radius:10px;object-fit:cover;flex:none}
+.pill.c0{background:var(--green);color:var(--ink)} .pill.c1{background:var(--ink);color:var(--green)} .pill.c2{background:var(--mist);color:var(--ink)}
+.pill.c3{background:#d9ffe2;color:var(--ink)} .pill.c4{background:#2b2b2b;color:var(--paper)} .pill.c5{background:var(--paper);color:var(--ink);box-shadow:inset 0 0 0 1px #d4d4d4}
+.flow.in .pill{opacity:1;transform:none}
+.pill:hover{transform:translateY(-3px) rotate(-2deg);box-shadow:0 12px 24px -12px rgba(26,26,26,.45)}
+.hub{position:relative;display:grid;place-items:center;height:100%}
+.hub .beam{position:absolute;right:50%;top:50%;width:min(52vw,760px);height:220px;transform:translateY(-50%);
+  background:radial-gradient(closest-side,rgba(97,254,135,.75),rgba(97,254,135,0));filter:blur(18px);opacity:0;transition:opacity .8s var(--ease) .6s;z-index:0}
+.flow.in .hub .beam{opacity:1;animation:beam 3.2s ease-in-out 1.4s infinite alternate}
+@keyframes beam{to{opacity:.55}}
+.hub .jt{position:relative;z-index:2;width:clamp(96px,9vw,140px);aspect-ratio:1;border-radius:24%;background:var(--ink);display:grid;place-items:center;
+  transform:scale(.6);opacity:0;transition:transform .6s var(--bounce) .5s,opacity .3s .5s;box-shadow:0 24px 50px -20px rgba(26,26,26,.6)}
+.flow.in .hub .jt{transform:none;opacity:1}
+.hub .jt svg{width:56%;height:auto}
+.teams{position:relative;height:clamp(360px,36vw,560px)}
+.arrows{position:absolute;inset:0;width:100%;height:100%;overflow:visible;z-index:0}
+.arrows path{fill:none;stroke:var(--green);stroke-width:6;stroke-linecap:round;opacity:.85;stroke-dasharray:var(--len);stroke-dashoffset:var(--len);transition:stroke-dashoffset .7s var(--ease);transition-delay:calc(1s + var(--i) * 140ms)}
+.flow.in .arrows path{stroke-dashoffset:0}
+.team{position:absolute;z-index:1;display:flex;flex-direction:column;align-items:center;transform:translate(-50%,-50%) scale(.4);opacity:0;
+  transition:transform .55s var(--bounce),opacity .3s;transition-delay:calc(1.25s + var(--i) * 140ms)}
+.flow.in .team{transform:translate(-50%,-50%);opacity:1}
+.team .tp{display:block;width:var(--s);height:var(--s);border-radius:50%;overflow:hidden;background:var(--mist);box-shadow:0 0 0 3px var(--paper)}
+.team .tp img{width:100%;height:100%;object-fit:cover}
+.team b{margin-top:-14px;padding:7px 12px;border-radius:10px;font:400 14px/1 Aileron,sans-serif;white-space:nowrap;position:relative}
+.team:hover .tp{transform:scale(1.06)} .team .tp{transition:transform .35s var(--ease)}
+@media(max-width:1000px){
+  .flow{grid-template-columns:minmax(0,1fr);justify-items:center;text-align:left;background:radial-gradient(70% 40% at 50% 50%,rgba(97,254,135,.28),transparent 70%)}
+  .pills{justify-content:center;width:100%}
+  .pill{height:auto;min-height:48px;padding:10px 14px;white-space:normal;font-size:14px} .pill img{width:36px;height:36px}
+  .team{--s:76px!important}
+  .hub{height:auto;padding-block:24px} .hub .beam{display:none}
+  .teams{height:auto;width:100%;display:flex;flex-wrap:wrap;justify-content:center;gap:28px 20px}
+  .team{position:static;transform:scale(.4)} .flow.in .team{transform:none}
+  .arrows{display:none}
+}
+@media(prefers-reduced-motion:reduce){.pill,.team,.hub .jt,.hub .beam{opacity:1!important;transform:none!important}.flow .team{transform:translate(-50%,-50%)!important}.arrows path{stroke-dashoffset:0!important}}
+.team b.pill{min-height:0;height:auto;padding:7px 12px;font-size:14px;white-space:nowrap}

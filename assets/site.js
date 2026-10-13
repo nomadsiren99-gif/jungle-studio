@@ -109,8 +109,35 @@ if (page === 'home') {
   measure(); addEventListener('resize', measure); document.fonts && document.fonts.ready.then(measure);
 
   $$('[data-count]').forEach(e => e.textContent = SERVICE_COUNT);
-  $('#drows').innerHTML = DISCIPLINES.map(([t, v, list]) => `<a class="drow reveal" href="services.html#${t.split(' ')[0].toLowerCase()}">
-    <div><h3 class="x">${t}</h3><p class="v">${v}</p></div><ul>${list.map(x => `<li>${x}</li>`).join('')}</ul><span class="go">${ARROW}</span></a>`).join('');
+  // Services flow (after superside.com): pills → beam → J. hub → arrows → teams.
+  const thumbs = { 'Ad creative': 'nepathya-auckland', 'Motion design': 'trn-fest', 'Illustration design': '1974-ad-tour', 'Packaging and merchandise design': 'lumbini-all-stars', 'AI-powered creative': 'glory-tour', 'Social media creative': 'janakpur-bolts' };
+  const cover = slug => (PROJECTS.find(p => p.slug === slug) || {}).img;
+  const all = DISCIPLINES.flatMap(([g, , list]) => list.map(n => [n, g]));
+  const tone = [0, 3, 1, 5, 2, 4, 0, 1, 3, 2, 4, 5, 1, 0, 2, 3, 4, 5, 1];
+  $('#pills').innerHTML = all.map(([n, g], i) => { const im = thumbs[n] && cover(thumbs[n]);
+    return `<li><a class="pill c${tone[i % tone.length]}${im ? ' t' : ''}" style="--i:${i}" href="services.html#${g.split(' ')[0].toLowerCase()}">${im ? `<img src="${im}" alt="" loading="lazy">` : ''}${n}</a></li>`; }).join('');
+  $('.hub .jt').innerHTML = `<span style="display:flex;align-items:flex-end;gap:4%;width:56%">${LOGO_NAV.split('<span')[0].replace('class="lj"', 'style="width:70%;height:auto;color:#fff"')}<i style="width:22%;aspect-ratio:1;border-radius:50%;background:var(--green);margin-bottom:6%"></i></span>`;
+  const TEAMS = [ // [label, x%, y%, size, project image, label tone]
+    ['Social', 26, 50, 128, 'janakpur-bolts', 'c0'], ['Performance', 30, 14, 84, 'glory-tour', 'c5'], ['Comms', 14, 34, 76, 'trn-fest', 'c1'],
+    ['Demand gen', 22, 82, 82, '1974-ad-tour', 'c3'], ['Content', 86, 13, 100, 'nepathya-auckland', 'c1'], ['Product marketing', 62, 18, 74, 'lumbini-all-stars', 'c3'],
+    ['Brand and creative', 80, 50, 112, 'lumbini-all-stars', 'c5'], ['Events', 56, 84, 78, 'nepathya-auckland', 'c0'], ['Campaigns', 88, 86, 96, 'trn-fest', 'c1'],
+  ];
+  const teams = $('#teams');
+  teams.insertAdjacentHTML('beforeend', TEAMS.map(([t, x, y, sz, slug, c], i) => {
+    const pp = PROJECTS.find(p => p.slug === slug) || {}, src = (pp.gallery && pp.gallery[i % (pp.gallery.length || 1)]) || pp.img;
+    return `<div class="team" style="left:${x}%;top:${y}%;--s:${sz}px;--i:${i}"><span class="tp">${src ? `<img src="${src}" alt="">` : ''}</span><b class="pill c${c.slice(1)}" style="opacity:1;transform:none;height:auto">${t}</b></div>`; }).join(''));
+  const drawArrows = () => {
+    const svg = $('#arrows'), r = teams.getBoundingClientRect();
+    svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`);
+    svg.innerHTML = TEAMS.slice(0, 9).map(([, x, y], i) => {
+      const tx = r.width * x / 100, ty = r.height * y / 100, sx = -20, sy = r.height / 2;
+      const ex = sx + (tx - sx) * .78, ey = sy + (ty - sy) * .78, mx = (sx + ex) / 2;
+      const d = `M${sx},${sy} C${mx},${sy} ${mx},${ey} ${ex},${ey}`, len = Math.hypot(ex - sx, ey - sy) * 1.3;
+      return `<path d="${d}" style="--len:${len};--i:${i}"/>`; }).join('');
+  };
+  drawArrows(); addEventListener('resize', drawArrows);
+  const fio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); fio.unobserve(e.target); } }), { threshold: .25 });
+  fio.observe($('#flow'));
 
   // Comparison table: Jungle. vs the usual alternatives. Rows rise in; ticks draw themselves.
   const I = {
