@@ -326,3 +326,28 @@ nav.mega-open{background:var(--ink)}
 nav .mega .mh-g{color:var(--ink)} nav .mega .mh-i{color:var(--green)} nav .mega .mh-m{color:var(--paper)} nav .mega .mh-p{color:var(--ink)}
 nav .mega a::before{display:none!important}
 @media(max-width:760px){nav .mega .mh-p{color:var(--ink)}}
+
+/* LIQUID GLASS NAV: floating lens over content (web approximation of Apple's Liquid Glass) */
+nav{top:12px;left:var(--gut);right:var(--gut);height:64px;padding:0 10px 0 24px;border-radius:22px;isolation:isolate;
+  background:linear-gradient(135deg,rgba(255,255,255,.14),rgba(255,255,255,.04)),rgba(26,26,26,.38);
+  -webkit-backdrop-filter:blur(22px) saturate(180%) contrast(1.06);backdrop-filter:blur(22px) saturate(180%) contrast(1.06);
+  border:1px solid rgba(255,255,255,.16);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.35),inset 0 -1px 0 rgba(255,255,255,.06),0 18px 50px -18px rgba(0,0,0,.65);
+  transition:transform .4s var(--ease),background .4s,box-shadow .4s}
+nav::before{content:"";position:absolute;inset:0;z-index:-1;border-radius:inherit;pointer-events:none;
+  background:radial-gradient(180px circle at var(--gx,30%) -20%,rgba(255,255,255,.28),transparent 60%),
+             linear-gradient(90deg,rgba(255,255,255,.10),transparent 35%,transparent 65%,rgba(255,255,255,.08))}
+nav::after{content:"";position:absolute;inset:1px;border-radius:21px;border:1px solid rgba(255,255,255,.06);pointer-events:none}
+nav.scrolled{border-color:rgba(255,255,255,.2);background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03)),rgba(26,26,26,.55)}
+nav.mega-open{background:linear-gradient(135deg,rgba(255,255,255,.12),rgba(255,255,255,.03)),rgba(26,26,26,.82)}
+nav .links .btn{height:46px}
+.mega{top:84px;left:var(--gut);right:var(--gut);border-radius:22px;border:1px solid var(--mist)}
+@media(max-width:760px){
+  nav{top:8px;left:8px;right:8px;height:60px;padding:0 8px 0 18px;border-radius:20px}
+  nav .links{top:76px;left:8px;right:8px;height:calc(100dvh - 84px);border-radius:20px;
+    background:rgba(26,26,26,.82);-webkit-backdrop-filter:blur(22px) saturate(180%);backdrop-filter:blur(22px) saturate(180%);border:1px solid rgba(255,255,255,.12)}
+  .mega{left:0;right:0;border:0;border-radius:0}
+}
+@media(prefers-reduced-transparency:reduce){nav,nav .links{background:#1A1A1A!important;-webkit-backdrop-filter:none;backdrop-filter:none}}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){nav{background:rgba(26,26,26,.94)}}
+.hero{padding-top:96px}

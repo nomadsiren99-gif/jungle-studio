@@ -90,6 +90,8 @@ if ($('.wtrack, .logo-track, .wrow')) {
 $$(`nav [data-p="${page}"]`).forEach(a => { a.classList.add('cur'); a.setAttribute('aria-current', 'page'); });
 const nav = $('nav'), menu = $('nav .menu');
 menu.onclick = () => { const o = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', o); menu.textContent = o ? 'Close' : 'Menu'; };
+// glass highlight follows the pointer across the bar
+nav.addEventListener('pointermove', e => { const r = nav.getBoundingClientRect(); nav.style.setProperty('--gx', (e.clientX - r.left) + 'px'); });
 const onScroll = () => nav.classList.toggle('scrolled', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
 { // mega menu: hover on desktop, click/tap anywhere, Esc to close
