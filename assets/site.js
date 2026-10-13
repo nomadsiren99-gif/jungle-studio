@@ -106,6 +106,34 @@ if (page === 'home') {
 
   $('#drows').innerHTML = DISCIPLINES.map(([t, v, list]) => `<a class="drow reveal" href="services.html#${t.split(' ')[0].toLowerCase()}">
     <div><h3 class="x">${t}</h3><p class="v">${v}</p></div><ul>${list.map(x => `<li>${x}</li>`).join('')}</ul><span class="go">${ARROW}</span></a>`).join('');
+
+  // Comparison table: Jungle. vs the usual alternatives. Rows rise in; ticks draw themselves.
+  const I = {
+    hire: '<path d="M9 11a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM2 21v-1a6 6 0 0 1 12 0v1M16 3.5a4 4 0 0 1 0 7.5M22 21v-1a6 6 0 0 0-4-5.6"/>',
+    agency: '<path d="M3 21V7l9-4 9 4v14M9 21v-6h6v6M3 21h18"/>',
+    free: '<path d="M12 12a4 4 0 1 0 0-8 4 4 0 0 0 0 8zM4 21a8 8 0 0 1 16 0"/>',
+    ai: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8zM19 15l.8 2.2L22 18l-2.2.8L19 21l-.8-2.2L16 18l2.2-.8z"/>',
+  };
+  const ico = d => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${d}</svg>`;
+  const tick = c => `<svg class="tick" viewBox="0 0 26 26" style="--c:${c}" role="img" aria-label="Yes"><path d="M6 13.5l4.5 4.5L20 8.5"/></svg>`;
+  const ROWS = [
+    ['Jungle.', 'Designers, motion artists and editors working alongside your team, on your brand, on your dates.', null, [1, 1, 1, 1, 1, 1]],
+    ['In-house hire', 'One person rarely covers design, motion and video, and hiring takes months.', 'hire', [0, 0, 1, 1, 0, 1]],
+    ['Big agencies', 'Strong work, but slow, costly and built around rigid process.', 'agency', [0, 0, 1, 1, 0, 0]],
+    ['Freelancers', 'Great for one-offs, harder to rely on for steady volume.', 'free', [1, 1, 1, 0, 1, 1]],
+    ['AI tools only', 'Fast and cheap, but no judgement, no brand sense, no craft.', 'ai', [1, 1, 0, 0, 1, 0]],
+  ];
+  const jm = LOGO_NAV.split('<span')[0].replace('class="lj"', 'class="lj" style="width:28px;height:auto;color:var(--paper)"');
+  $('#vs-body').innerHTML = ROWS.map(([t, d, ic, v], r) => `<tr class="${r ? '' : 'us'}"><td><div class="who"><span class="ic">${r ? ico(I[ic]) : `<span style="display:flex;align-items:flex-end;gap:2px">${jm}<i style="width:9px;height:9px;border-radius:50%;background:var(--green);margin-bottom:2px"></i></span>`}</span><div><b>${t}</b><p>${d}</p></div></div></td>${v.map((y, c) => `<td>${y ? tick(c) : '<span class="no" role="img" aria-label="No"></span>'}</td>`).join('')}</tr>`).join('');
+  const rio = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { setTimeout(() => e.target.classList.add('in'), [...e.target.parentNode.children].indexOf(e.target) * 110); rio.unobserve(e.target); } }), { threshold: .4 });
+  $$('#vs-body tr').forEach(tr => reduce ? tr.classList.add('in') : rio.observe(tr));
+
+  // Expanding case cards: hover (or focus) widens one, revealing the result.
+  const cases = PROJECTS.filter(p => p.img).slice(0, 4);
+  $('#xcards').innerHTML = cases.map((p, i) => `<a class="xcard${i ? '' : ' open'}" href="project.html?p=${p.slug}">${art(p)}
+    <div class="xc-body"><p class="xc-tag">${sector(p)}</p><h3 class="w">${p.title}</h3>
+    <div class="xc-more"><div><p>${p.result}</p><span>Read the case ${ARROW.replace('<svg', '<svg width="16" height="16"')}</span></div></div></div></a>`).join('');
+  $$('.xcard').forEach(c => { const open = () => $$('.xcard').forEach(x => x.classList.toggle('open', x === c)); c.onmouseenter = open; c.onfocus = open; });
 }
 
 if (page === 'services') {

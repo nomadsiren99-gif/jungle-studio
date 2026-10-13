@@ -118,3 +118,60 @@ body.go .rise{opacity:1;transform:none}
   .wtrack,.logo-track{animation:none}
   .pan{height:auto}.pan-sticky{position:static;height:auto;overflow-x:auto;padding-block:96px}.pan-track{animation:none}
 }
+
+/* COMPARISON (after superside.com "Hiring or traditional outsourcing? Neither.") */
+.vs{text-align:center}
+.vs h2{font-size:var(--t-head);max-width:16ch;margin-inline:auto}
+.vs-scroll{margin-top:clamp(48px,6vw,88px);overflow-x:auto;overflow-y:hidden;-webkit-overflow-scrolling:touch}
+.vs-t{width:100%;min-width:920px;border-collapse:separate;border-spacing:0 8px;text-align:left}
+.vs-t thead th{font:400 clamp(16px,1.3vw,20px)/1.2 "PP Agrandir Narrow",sans-serif;color:var(--smoke);text-align:center;padding:0 8px 16px;width:11%}
+.vs-t thead th:first-child{width:34%}
+.vs-t td{padding:22px 8px;text-align:center;vertical-align:middle;border-top:1px solid #2c2c2c;transition:background .3s}
+.vs-t td:first-child{text-align:left;padding-left:24px}
+.vs-t tr:not(.us):hover td{background:#202020}
+.vs-t tr:not(.us) td:first-child{border-radius:var(--r) 0 0 var(--r)} .vs-t tr:not(.us) td:last-child{border-radius:0 var(--r) var(--r) 0}
+.vs-t .who{display:flex;gap:18px;align-items:center}
+.vs-t .ic{flex:none;width:56px;height:56px;border-radius:12px;display:grid;place-items:center;background:#262626;color:var(--smoke)}
+.vs-t .ic svg{width:26px;height:26px}
+.vs-t .who b{display:block;font:400 clamp(18px,1.4vw,22px)/1.2 "PP Agrandir",sans-serif;color:var(--paper)}
+.vs-t .who p{color:var(--smoke);font-size:14px;line-height:1.5;margin-top:4px;max-width:40ch}
+.vs-t .us td{background:var(--green);color:var(--ink);border:0;padding-block:28px}
+.vs-t .us td:first-child{border-radius:var(--r) 0 0 var(--r)} .vs-t .us td:last-child{border-radius:0 var(--r) var(--r) 0}
+.vs-t .us .ic{background:var(--ink);width:72px;height:72px;border-radius:16px}
+.vs-t .us .ic svg{width:44px;height:44px}
+.vs-t .us .who b{color:var(--ink);font-size:clamp(22px,1.8vw,28px)} .vs-t .us .who p{color:#1f3a28}
+.tick{width:26px;height:26px;display:inline-block;vertical-align:middle}
+.tick path{fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-dasharray:30;stroke-dashoffset:30}
+.vs-t tr.in .tick path{transition:stroke-dashoffset .45s var(--ease);transition-delay:calc(var(--c) * 70ms + 150ms);stroke-dashoffset:0}
+.vs-t tr{opacity:0;transform:translateY(16px);transition:opacity .5s var(--ease),transform .5s var(--ease)}
+.vs-t tr.in{opacity:1;transform:none}
+.vs-t thead tr{opacity:1;transform:none}
+.no{display:inline-block;width:14px;height:1px;background:#4a4a4a;vertical-align:middle}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0)}
+
+/* EXPANDING CASE CARDS (after superside.com "See how top brands use Superside") */
+.cases-head{display:flex;justify-content:space-between;align-items:end;gap:24px;flex-wrap:wrap}
+.cases h2{font-size:var(--t-head);max-width:12ch}
+.xcards{display:flex;gap:12px;height:min(70vh,620px);margin-top:clamp(40px,5vw,72px)}
+.xcard{position:relative;flex:1;min-width:0;border-radius:var(--r);overflow:hidden;isolation:isolate;transition:flex .7s var(--ease)}
+.xcard.open{flex:3.2}
+.xcard .art{z-index:-2;transition:transform 1s var(--ease),filter .7s}
+.xcard:not(.open) .art{filter:brightness(.55) saturate(.6)}
+.xcard.open .art{transform:scale(1.03)}
+.xcard::after{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(transparent 40%,rgba(10,10,10,.85))}
+.xcard .xc-body{position:absolute;left:0;right:0;bottom:0;padding:clamp(20px,2vw,32px)}
+.xcard h3{font-size:clamp(22px,2vw,34px);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.xcard .xc-tag{color:var(--green);font-size:14px;margin-bottom:8px}
+.xcard .xc-more{display:grid;grid-template-rows:0fr;opacity:0;transition:grid-template-rows .6s var(--ease),opacity .4s}
+.xcard .xc-more>div{min-height:0;overflow:hidden}
+.xcard.open .xc-more{grid-template-rows:1fr;opacity:1;transition-delay:.15s}
+.xcard .xc-more p{max-width:44ch;color:#d8d8d8;margin-top:12px}
+.xcard .xc-more span{display:inline-flex;align-items:center;gap:8px;margin-top:16px;padding:10px 16px;border-radius:99px;background:var(--green);color:var(--ink);font-size:14px}
+.b-stat{transition:transform .45s var(--ease)}
+.b-stat:hover{transform:translateY(-6px) rotate(-1deg)}
+@media(max-width:900px){
+  .xcards{flex-direction:column;height:auto}
+  .xcard,.xcard.open{flex:none;height:420px}
+  .xcard .xc-more{grid-template-rows:1fr;opacity:1}
+  .xcard:not(.open) .art{filter:none}
+}
