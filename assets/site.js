@@ -153,34 +153,32 @@ if (page === 'home') {
   const speed = () => $$('.wtrack').forEach(t => t.style.animationDuration = (t.scrollHeight / 2 / 25) + 's');
   speed(); addEventListener('load', speed);
 
-  // Clients: generated monogram marks (replace with real client logos when available).
-  const mark = n => `<span class="mark" role="img" aria-label="${n}"><svg viewBox="0 0 48 48" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="2" width="44" height="44" rx="12"/><text x="24" y="30" text-anchor="middle" fill="currentColor" stroke="none" font-family="PP Agrandir,sans-serif" font-size="16">${n.split(' ').map(w => w[0]).join('').slice(0, 2)}</text></svg>${n}</span>`;
-  const clients = [...new Set(PROJECTS.map(p => p.client.split(',')[0].replace(/ (Live|Festival|Football Club|Streetwear|Records|Boxing Promotions|Network)$/, '')))];
-  $('#logos').innerHTML = clients.map(mark).join('').repeat(2);
+  // Clients: real logos, greyscale until hovered.
+  const CLIENTS = [['janakpur-bolts', 'Janakpur Bolts'], ['husqvarna', 'Husqvarna'], ['lumbini-all-stars', 'Lumbini All Stars'], ['plo-lubricants', 'PLO Lubricants'], ['ptt', 'PTT'], ['sk-zic', 'SK enmove ZIC']];
+  const logoRow = CLIENTS.map(([f, n]) => `<span class="clogo"><img src="assets/clients/${f}.png" alt="${n}" width="120" height="120" loading="lazy"></span>`).join('');
+  $('#logos').innerHTML = logoRow.repeat(4);
 
   // Split media
-  $('#m-ai').insertAdjacentHTML('afterbegin', img(gal(by('glory-tour'), 0), 'Glory Tour poster'));
-  $('#m-partner').insertAdjacentHTML('afterbegin', img(gal(by('nepathya-auckland'), 0), 'Nepathya campaign') +
+  $('#m-ai').insertAdjacentHTML('afterbegin', img('assets/stock/h-ai.jpg', 'A designer working at a laptop'));
+  $('#m-partner').insertAdjacentHTML('afterbegin', img('assets/stock/h-partner.jpg', 'A marketing team working together around a table') +
     '<a class="play" href="work.html" aria-label="See the work"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></a>');
 
-  // Three feature cards (hover reveals the detail)
+  // Ways of working: three graphic cards (icon + word), no repeated project photos.
   const F = [
-    ['c-g', '<span class="v">Flexible</span> ways to work', 'Project by project, ongoing support or a full campaign. Change course as your plans do.', gal(by('lumbini-all-stars'), 0)],
-    ['c-i', 'Real designers, <span class="v">from Nepal</span>', 'A tight team of designers, motion artists and editors, working with brands around the world.', gal(by('1974-ad-tour'), 4)],
-    ['c-m', '<span class="v">AI-assisted</span> workflows', 'AI handles the repetitive parts, our people handle the idea and the finish.', gal(by('trn-fest'), 2)],
+    ['c-g', 'flex', 'Flexible by design.', 'One project, ongoing support or a full campaign. Change gears as your plans do.'],
+    ['c-i', 'team', 'A small, senior team.', 'Designers, motion artists and editors in Nepal, working with clients around the world.'],
+    ['c-m', 'owner', 'One point of contact.', 'One person owns your project from brief to final file, so nothing gets lost.'],
   ];
-  $('#fcards').innerHTML = F.map(([c, t, d, src]) => `<article class="fcard ${c} reveal" tabindex="0"><div class="fm">${img(src)}</div><div class="fb"><h3 class="w">${t}</h3><p>${d}</p></div></article>`).join('');
+  const FI = { flex: '<path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/>', team: '<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M2 20a6 6 0 0 1 12 0M10 20a6 6 0 0 1 12 0"/>', owner: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0M17 4l2 2 3-3"/>' };
+  $('#fcards').innerHTML = F.map(([c, ic, t, d]) => `<article class="fcard ${c} reveal" tabindex="0"><div class="fm fg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${FI[ic]}</svg></div><div class="fb"><h3 class="w">${t}</h3><p>${d}</p></div></article>`).join('');
 
-  // Two story cards
-  $('#stories').innerHTML = ['janakpur-bolts', 'nepathya-auckland'].map(slug => { const p = by(slug);
-    return `<a class="story reveal" href="project.html?p=${p.slug}">${img(p.img, p.title)}<div><span class="tag">Case study</span><q>${p.brief}</q></div><span class="go2">Read the story ${ARROW.replace('<svg', '<svg width="16" height="16"')}</span></a>`; }).join('');
 
   // Services flow (after superside.com): pills → beam → J. hub → arrows → teams.
   const thumbs = { 'Ad creative': 'nepathya-auckland', 'Motion design': 'trn-fest', 'Illustration design': '1974-ad-tour', 'Packaging and merchandise design': 'lumbini-all-stars', 'AI-powered creative': 'glory-tour', 'Social media creative': 'janakpur-bolts' };
   const cover = slug => (PROJECTS.find(p => p.slug === slug) || {}).img;
   const all = DISCIPLINES.flatMap(([g, , list]) => list.map(n => [n, g]));
   const tone = [0, 3, 1, 5, 2, 4, 0, 1, 3, 2, 4, 5, 1, 0, 2, 3, 4, 5, 1];
-  $('#pills').innerHTML = all.map(([n, g], i) => { const im = thumbs[n] && cover(thumbs[n]);
+  $('#pills').innerHTML = all.map(([n, g], i) => { const im = null;
     return `<li><a class="pill c${tone[i % tone.length]}${im ? ' t' : ''}" style="--i:${i}" href="services.html#${g.split(' ')[0].toLowerCase()}">${im ? `<img src="${im}" alt="" loading="lazy">` : ''}${n}</a></li>`; }).join('');
   $('.hub .jt').innerHTML = `<span style="display:flex;align-items:flex-end;gap:4%;width:56%">${LOGO_NAV.split('<span')[0].replace('class="lj"', 'style="width:70%;height:auto;color:#fff"')}<i style="width:22%;aspect-ratio:1;border-radius:50%;background:var(--green);margin-bottom:6%"></i></span>`;
   const TEAMS = [ // [label, x%, y%, size, project image, label tone]
@@ -190,8 +188,8 @@ if (page === 'home') {
   ];
   const teams = $('#teams');
   teams.insertAdjacentHTML('beforeend', TEAMS.map(([t, x, y, sz, slug, c], i) => {
-    const pp = PROJECTS.find(p => p.slug === slug) || {}, src = (pp.gallery && pp.gallery[i % (pp.gallery.length || 1)]) || pp.img;
-    return `<div class="team" style="left:${x}%;top:${y}%;--s:${sz}px;--i:${i}"><span class="tp">${src ? `<img src="${src}" alt="">` : ''}</span><b class="pill c${c.slice(1)}" style="opacity:1;transform:none;height:auto">${t}</b></div>`; }).join(''));
+    const ph = ['social', 'performance', 'comms', 'demand', 'content', 'product', 'brand', 'events', 'campaigns'][i];
+    return `<div class="team" style="left:${x}%;top:${y}%;--s:${sz}px;--i:${i}"><span class="tp"><img src="assets/stock/t-${ph}.jpg" alt="" width="160" height="160" loading="lazy"></span><b class="pill c${c.slice(1)}" style="opacity:1;transform:none;height:auto">${t}</b></div>`; }).join(''));
   const drawArrows = () => {
     const svg = $('#arrows'), r = teams.getBoundingClientRect();
     svg.setAttribute('viewBox', `0 0 ${r.width} ${r.height}`);
@@ -232,8 +230,7 @@ if (page === 'home') {
 
   // Wins: real results from the work, two rows drifting opposite ways (no invented quotes)
   const win = p => `<a class="win" href="project.html?p=${p.slug}"><div class="who">${p.img ? img(p.img) : `<span class="art ${p.art}" style="position:relative;width:44px;height:44px;border-radius:50%;flex:none;overflow:hidden"></span>`}<div><b>${p.title}</b><span>${p.client.split(',')[0]}</span></div></div><p>${p.result}</p><span class="lnk">${sector(p)}</span></a>`;
-  const half = Math.ceil(PROJECTS.length / 2), r1 = PROJECTS.slice(0, half).map(win).join(''), r2 = PROJECTS.slice(half).map(win).join('');
-  $('#wrow1').innerHTML = r1 + r1; $('#wrow2').innerHTML = r2 + r2;
+  const wr = real.map(win).join(''); $('#wrow1').innerHTML = wr + wr;
 
   // Bento: typed brief, stepping process, brand collage, tools hub
   const typed = $('#typed'), lines = ['Can you make 12 matchday posts by Friday?', 'We need a 15s reel for the tour launch.', 'Resize our campaign for every format.'];
@@ -244,19 +241,17 @@ if (page === 'home') {
   const st = $$('#steps2 li'); let k = 0;
   const step = () => { st.forEach((x, i) => x.classList.toggle('on', i <= k)); k = (k + 1) % (st.length + 1); };
   step(); if (!reduce) setInterval(step, 1100);
-  $('#collage').innerHTML = [gal(by('janakpur-bolts'), 0), gal(by('lumbini-all-stars'), 1), gal(by('trn-fest'), 11)].map(s => img(s)).join('');
+  $('#collage').innerHTML = ['janakpur-bolts', 'lumbini-all-stars', 'husqvarna'].map(f => `<img src="assets/clients/${f}.png" alt="" loading="lazy">`).join('');
   $('#tj').innerHTML = `<span style="display:flex;align-items:flex-end;gap:3px;width:46%">${LOGO_NAV.split('<span')[0].replace('class="lj"', 'style="width:72%;height:auto;color:#fff"')}<i style="width:24%;aspect-ratio:1;border-radius:50%;background:var(--green);margin-bottom:6%"></i></span>`;
 
-  // Talent + final CTA media
-  $('#m-talent').innerHTML = `<div class="tl-grid">${real.slice(0, 6).map(p => img(gal(p, 3), p.title)).join('')}</div>`;
-  $('#m-burn').innerHTML = img(gal(by('lumbini-all-stars'), 14), 'Lumbini All Stars champions poster');
+  $('#tt-j').innerHTML = LOGO_NAV.split('<span')[0].replace('class="lj"', 'style="width:100%;height:auto;color:#fff"') + '<i></i>';
 }
 
 if (page === 'services') {
   const ex = { 'Creative Design': 'janakpur-bolts', 'Motion Design': 'nepathya-auckland', 'Digital Design': 'trn-fest', 'Content and Campaigns': '1974-ad-tour', 'AI Services': 'lumbini-all-stars' };
-  $('#disciplines').innerHTML = DISCIPLINES.map(([t, v, list], i) => { const p = PROJECTS.find(x => x.slug === ex[t]) || PROJECTS[i];
-    return `<section class="split rule reveal" id="${t.split(' ')[0].toLowerCase()}" style="padding-block:clamp(56px,7vw,112px);align-items:start">
-      <a class="card" href="project.html?p=${p.slug}"><div class="thumb">${art(p)}</div><div class="meta"><div><h3 class="w" style="font-size:17px">${p.title}</h3></div></div></a>
+  $('#disciplines').innerHTML = DISCIPLINES.map(([t, v, list], i) => { const key = t.split(' ')[0].toLowerCase();
+    return `<section class="split rule reveal" id="${key}" style="padding-block:clamp(56px,7vw,112px);align-items:start">
+      <div class="card"><div class="thumb"><div class="art"><img src="assets/stock/s-${key}.jpg" alt="" width="900" height="1125" loading="lazy"></div></div></div>
       <div><h2 class="x" style="font-size:var(--t-head)">${t}.</h2><p class="v" style="font-size:var(--t-voice);color:var(--green);margin-top:8px">${v}</p>
       <div class="tags mt">${list.map(x => `<span>${x}</span>`).join('')}</div></div></section>`; }).join('');
   // headline dots for the injected h2s

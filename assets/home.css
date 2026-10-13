@@ -289,3 +289,26 @@ body.go .rise{opacity:1;transform:none}
 }
 @media(max-width:560px){.wgrid{grid-template-columns:1fr}.wk.big{grid-column:auto}.dgrid{grid-template-columns:1fr}.nrow{flex-direction:column;align-items:flex-start}}
 @media(prefers-reduced-motion:reduce){.wrow{animation:none;flex-wrap:wrap;width:auto}.caret{animation:none}}
+/* client logos marquee */
+.clogo{display:grid;place-items:center;width:150px;height:110px;flex:none}
+.clogo img{max-width:110px;max-height:96px;width:auto;height:auto;object-fit:contain;filter:grayscale(1) contrast(.9);opacity:.7;transition:filter .4s,opacity .4s,transform .4s var(--ease)}
+.clogo:hover img{filter:none;opacity:1;transform:scale(1.06)}
+.clients-strip .logo-track{gap:40px;animation-duration:40s}
+/* graphic feature cards */
+.fm.fg{display:grid;place-items:center;aspect-ratio:1/.8}
+.fm.fg svg{width:38%;height:auto;transition:transform .6s var(--ease)}
+.fcard:hover .fm.fg svg{transform:scale(1.08) rotate(-6deg)}
+.fcard.c-g .fm{background:#8dffa9;color:var(--ink)} .fcard.c-i .fm{background:#1f1f1f;color:var(--green)} .fcard.c-m .fm{background:#dcdcdc;color:var(--ink)}
+/* bento logos */
+.collage img{background:var(--paper);object-fit:contain;padding:10px;aspect-ratio:1}
+/* team block: big type + J. */
+.tl-type{display:grid;place-items:center;background:var(--ink);overflow:hidden}
+.tt{display:flex;flex-direction:column;align-items:center;font:400 clamp(44px,6vw,104px)/1 "PP Agrandir",sans-serif;letter-spacing:-.03em;color:#333}
+.tt span{transition:color .3s}
+.tt span:hover{color:var(--paper)}
+.tt-j{position:absolute;right:8%;bottom:8%;width:clamp(56px,7vw,96px);display:flex;align-items:flex-end;gap:6%}
+.tt-j svg{width:78%!important}
+.tt-j i{width:22%;aspect-ratio:1;border-radius:50%;background:var(--green);margin-bottom:6%}
+/* closing stickers */
+.bn-stickers{position:relative;background:var(--ink);min-height:420px}
+.bn-stickers .sticker{font-size:clamp(18px,1.8vw,28px);padding:16px 28px}
