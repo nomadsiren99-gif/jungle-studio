@@ -321,8 +321,11 @@ if (page === 'service') {
 if (page === 'work') {
   // Layout after superside.com/our-work: collage, statement, logos, full-bleed 2-up tiles.
   const real = PROJECTS.filter(p => p.img), list = real.concat(PROJECTS.filter(p => !p.img));
-  const pics = real.flatMap(p => [p.img, ...(p.gallery || []).slice(0, 2)]).slice(0, 10);
-  $('#reel').innerHTML = pics.map((src, i) => `<span class="r${i}"><img src="${src}" alt="" loading="${i < 5 ? 'eager' : 'lazy'}"></span>`).join('');
+  const sr = $('#sr'), sb = $('#sr-btn');
+  if (reduce) sr.removeAttribute('autoplay'), sr.pause();
+  const sync = () => { const p = sr.paused; sb.setAttribute('aria-label', p ? 'Play showreel' : 'Pause showreel');
+    sb.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="${p ? 'M8 5l11 7-11 7z' : 'M7 5h4v14H7zM13 5h4v14h-4z'}"/></svg>`; };
+  sb.onclick = () => (sr.paused ? sr.play() : sr.pause()); sr.onplay = sr.onpause = sync; sync();
   const CL = [['janakpur-bolts', 'Janakpur Bolts'], ['husqvarna', 'Husqvarna'], ['lumbini-all-stars', 'Lumbini All Stars'], ['plo-lubricants', 'PLO Lubricants'], ['ptt', 'PTT'], ['sk-zic', 'SK enmove ZIC']];
   $('#wlogos').innerHTML = CL.map(([f, n]) => `<span class="clogo"><img src="assets/clients/${f}.png" alt="${n}" width="120" height="120"></span>`).join('').repeat(4);
   $('#grid').innerHTML = list.map(p => `<a class="tile2" data-c="${p.cat}" href="project.html?p=${p.slug}">${art(p)}

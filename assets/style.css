@@ -420,3 +420,7 @@ body[data-page=work] .chip{border-color:#d4d4d4;color:var(--ink)} body[data-page
 nav,nav.scrolled,nav.mega-open{background:var(--ink)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;border-bottom:1px solid #2a2a2a!important}
 nav::before,nav::after{display:none!important}
 @media(max-width:760px){nav .links{background:var(--ink)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
+.showreel{position:relative;margin:0;aspect-ratio:2/1;border-radius:var(--r);overflow:hidden;background:var(--ink)}
+.showreel video{width:100%;height:100%;object-fit:cover;display:block}
+.sr-btn{position:absolute;right:20px;bottom:20px;width:52px;height:52px;border-radius:50%;border:0;background:var(--green);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:transform .3s var(--bounce)}
+.sr-btn:hover{transform:scale(1.08)} .sr-btn svg{width:20px;height:20px}
