@@ -163,7 +163,6 @@ nav .menu{display:none;background:none;border:0;color:var(--paper);font:400 15px
 .art b{font-family:"PP Agrandir",sans-serif;font-weight:400;letter-spacing:-.03em;line-height:.92}
 .a1,.a4,.a7{background:var(--paper);color:var(--ink)} .a2,.a5,.a8{background:var(--ink-2);color:var(--paper)} .a3,.a6,.a9{background:var(--green);color:var(--ink)}
 .art[class*=" a"] b{position:absolute;left:8%;bottom:8%;right:8%;font-size:clamp(40px,5vw,88px)}
-.art[class*=" a"]::after{content:"";position:absolute;right:8%;top:8%;width:30%;height:13%;background:currentColor;clip-path:polygon(0 42%,100% 0,100% 100%,0 100%)}
 .a6 b{white-space:nowrap;font-size:clamp(32px,3.4vw,56px)!important;overflow:hidden}
 .a6 .out{font-family:inherit}
 
