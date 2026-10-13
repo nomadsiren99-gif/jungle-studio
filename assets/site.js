@@ -185,7 +185,7 @@ if (page === 'home') {
   $$('#vs-body tr').forEach(tr => reduce ? tr.classList.add('in') : rio.observe(tr));
 
   // Wins: real results from the work, two rows drifting opposite ways (no invented quotes)
-  const win = p => `<a class="win" href="project.html?p=${p.slug}"><div class="who">${img(p.img)}<div><b>${p.title}</b><span>${p.client.split(',')[0]}</span></div></div><p>${p.result}</p><span class="lnk">${sector(p)}</span></a>`;
+  const win = p => `<a class="win" href="project.html?p=${p.slug}"><div class="who">${p.img ? img(p.img) : `<span class="art ${p.art}" style="position:static;width:44px;height:44px;border-radius:50%;flex:none"></span>`}<div><b>${p.title}</b><span>${p.client.split(',')[0]}</span></div></div><p>${p.result}</p><span class="lnk">${sector(p)}</span></a>`;
   const half = Math.ceil(PROJECTS.length / 2), r1 = PROJECTS.slice(0, half).map(win).join(''), r2 = PROJECTS.slice(half).map(win).join('');
   $('#wrow1').innerHTML = r1 + r1; $('#wrow2').innerHTML = r2 + r2;
 
