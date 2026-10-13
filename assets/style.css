@@ -408,3 +408,15 @@ body[data-page=work] .chip{border-color:#d4d4d4;color:var(--ink)} body[data-page
 .reel .r4{grid-column:5;grid-row:1} .reel .r5{grid-column:2;grid-row:2} .reel .r6{grid-column:3;grid-row:2} .reel .r7{grid-column:5;grid-row:2}
 .reel span:nth-child(n+9){display:none}
 @media(max-width:760px){.reel{grid-template-columns:repeat(3,1fr)}.reel span{grid-column:auto!important;grid-row:auto!important}}
+/* work tiles: caption hidden; a green 10° panel slides up on hover with the name */
+.tile2::after{background:none}
+.t2-cap{left:0;right:0;bottom:0;padding:44px clamp(20px,3vw,44px) clamp(20px,2.6vw,36px);background:var(--green);color:var(--ink);
+  clip-path:polygon(0 100%,100% 100%,100% 100%,0 100%);transition:clip-path .55s var(--ease)}
+.tile2:hover .t2-cap,.tile2:focus-visible .t2-cap{clip-path:polygon(0 calc(100% * 0 + 40px),100% 0,100% 100%,0 100%)}
+.t2-cap h2 span,.tile2:hover .t2-cap h2 span{color:var(--ink)}
+.t2-cap p{opacity:.75}
+@media(hover:none){.t2-cap{clip-path:polygon(0 40px,100% 0,100% 100%,0 100%)}}
+/* menu bar: solid, no glass */
+nav,nav.scrolled,nav.mega-open{background:var(--ink)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important;box-shadow:none!important;border-bottom:1px solid #2a2a2a!important}
+nav::before,nav::after{display:none!important}
+@media(max-width:760px){nav .links{background:var(--ink)!important;-webkit-backdrop-filter:none!important;backdrop-filter:none!important}}
