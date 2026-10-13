@@ -325,3 +325,48 @@ body.go .rise{opacity:1;transform:none}
 .tt-j{position:static;display:flex;margin-top:24px;width:64px}
 @media(max-width:1000px){.talent{grid-template-columns:1fr}}
 .tt-j{display:none!important}
+
+/* animated scenes in the "Good people. Clear process." cards */
+.sc{position:relative;width:78%;max-width:340px;font:400 13px/1.2 Aileron,sans-serif}
+/* 1 flexible: segmented switch + resizing blocks */
+.seg{position:relative;display:grid;grid-template-columns:repeat(3,1fr);background:rgba(26,26,26,.1);border-radius:99px;padding:4px}
+.seg span{position:relative;z-index:1;text-align:center;padding:9px 0;color:var(--ink);transition:color .3s}
+.seg i{position:absolute;top:4px;bottom:4px;left:4px;width:calc((100% - 8px)/3);border-radius:99px;background:var(--ink);animation:seg 6s var(--ease) infinite}
+.seg span:nth-of-type(1){animation:segc1 6s infinite} .seg span:nth-of-type(2){animation:segc2 6s infinite} .seg span:nth-of-type(3){animation:segc3 6s infinite}
+@keyframes seg{0%,28%{transform:translateX(0)}33%,61%{transform:translateX(100%)}66%,95%{transform:translateX(200%)}100%{transform:translateX(0)}}
+@keyframes segc1{0%,28%{color:var(--green)}30%,97%{color:var(--ink)}100%{color:var(--green)}}
+@keyframes segc2{0%,31%{color:var(--ink)}33%,61%{color:var(--green)}63%,100%{color:var(--ink)}}
+@keyframes segc3{0%,64%{color:var(--ink)}66%,95%{color:var(--green)}97%,100%{color:var(--ink)}}
+.blocks{display:flex;gap:6px;margin-top:16px;height:70px}
+.blocks b{flex:1;border-radius:10px;background:var(--ink);animation:blk 6s var(--ease) infinite}
+.blocks b:nth-child(2){animation-name:blk2} .blocks b:nth-child(3){animation-name:blk3} .blocks b:nth-child(4){animation-name:blk4}
+@keyframes blk{0%,28%{flex:3}33%,61%{flex:1}66%,95%{flex:2}100%{flex:3}}
+@keyframes blk2{0%,28%{flex:.001;opacity:0}33%,61%{flex:1;opacity:1}66%,95%{flex:1.2;opacity:1}100%{flex:.001;opacity:0}}
+@keyframes blk3{0%,28%{flex:.001;opacity:0}33%,61%{flex:1;opacity:1}66%,95%{flex:2;opacity:1}100%{flex:.001;opacity:0}}
+@keyframes blk4{0%,61%{flex:.001;opacity:0}66%,95%{flex:1;opacity:1}100%{flex:.001;opacity:0}}
+/* 2 team: avatars + Nepal → world arc */
+.sc-team{height:180px}
+.arc{position:absolute;inset:0 0 auto;width:100%;height:auto;overflow:visible}
+.arc path{stroke:rgba(97,254,135,.45);stroke-width:1.5;stroke-dasharray:4 6;animation:dash 1.2s linear infinite}
+@keyframes dash{to{stroke-dashoffset:-20}}
+.arc .fly{fill:var(--green)}
+.pin{position:absolute;top:66px;padding:5px 10px;border-radius:99px;background:#2b2b2b;color:var(--paper);font-size:12px}
+.pin-a{left:-6%} .pin-b{right:-10%;background:var(--green);color:var(--ink)}
+.avs{position:absolute;left:50%;bottom:0;transform:translateX(-50%);display:flex}
+.avs span{width:54px;height:54px;border-radius:50%;display:grid;place-items:center;margin-left:-12px;border:3px solid #1f1f1f;font:400 20px "PP Agrandir",sans-serif;
+  background:var(--green);color:var(--ink);animation:bob 2.4s ease-in-out infinite}
+.avs span:nth-child(2){background:var(--paper);animation-delay:.3s} .avs span:nth-child(3){background:#3a3a3a;color:var(--green);animation-delay:.6s}
+@keyframes bob{0%,100%{transform:translateY(0)}50%{transform:translateY(-6px)}}
+/* 3 one point of contact: a chat that plays out */
+.sc-chat{display:flex;flex-direction:column;gap:8px;height:190px;justify-content:flex-end}
+.m{max-width:82%;padding:10px 14px;border-radius:14px;opacity:0;transform:translateY(8px) scale(.96);animation:msg 7s var(--ease) infinite}
+.m.in{align-self:flex-start;background:var(--paper);color:var(--ink);border-bottom-left-radius:4px}
+.m.out{align-self:flex-end;background:var(--ink);color:var(--green);border-bottom-right-radius:4px;animation-delay:2.4s}
+.m.typing{align-self:flex-end;background:var(--ink);display:flex;gap:4px;padding:12px 14px;animation:typ 7s infinite;animation-delay:1s}
+.m.typing i{width:6px;height:6px;border-radius:50%;background:var(--green);animation:td 1s infinite}
+.m.typing i:nth-child(2){animation-delay:.15s} .m.typing i:nth-child(3){animation-delay:.3s}
+.m.done{animation-delay:3.8s} .m.done b{color:#1a9b46;font-weight:400}
+@keyframes msg{0%{opacity:0;transform:translateY(8px) scale(.96)}6%,88%{opacity:1;transform:none}96%,100%{opacity:0;transform:translateY(-4px)}}
+@keyframes typ{0%{opacity:0;max-height:0;padding:0 14px}5%,18%{opacity:1;max-height:40px;padding:12px 14px}22%,100%{opacity:0;max-height:0;padding:0 14px;margin:-8px 0 0}}
+@keyframes td{0%,100%{opacity:.3;transform:none}50%{opacity:1;transform:translateY(-3px)}}
+@media(prefers-reduced-motion:reduce){.m{opacity:1;transform:none}.m.typing{display:none}.blocks b:nth-child(n+2){flex:1;opacity:1}}

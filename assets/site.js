@@ -163,14 +163,22 @@ if (page === 'home') {
   $('#m-partner').insertAdjacentHTML('afterbegin', img('assets/stock/h-partner.jpg', 'A marketing team working together around a table') +
     '<a class="play" href="work.html" aria-label="See the work"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M7 4l13 8-13 8z"/></svg></a>');
 
-  // Ways of working: three graphic cards (icon + word), no repeated project photos.
+  // Ways of working: three small animated scenes that act out each title.
+  const SCENES = {
+    flex: `<div class="sc sc-flex"><div class="seg"><i></i><span>Project</span><span>Ongoing</span><span>Campaign</span></div>
+      <div class="blocks"><b></b><b></b><b></b><b></b></div></div>`,
+    team: `<div class="sc sc-team"><svg class="arc" viewBox="0 0 220 90" aria-hidden="true"><path id="arcp" d="M20 80 Q110 -20 200 80" fill="none"/><circle r="5" class="fly"><animateMotion dur="3.2s" repeatCount="indefinite" rotate="auto"><mpath href="#arcp"/></animateMotion></circle></svg>
+      <span class="pin pin-a">Nepal</span><span class="pin pin-b">Worldwide</span>
+      <div class="avs"><span>D</span><span>M</span><span>E</span></div></div>`,
+    owner: `<div class="sc sc-chat"><p class="m in">Need 12 matchday posts by Friday?</p><p class="m typing"><i></i><i></i><i></i></p>
+      <p class="m out">On it. I’ll own it end to end.</p><p class="m in done">Delivered <b>✓✓</b></p></div>`,
+  };
   const F = [
     ['c-g', 'flex', 'Flexible by design.', 'One project, ongoing support or a full campaign. Change gears as your plans do.'],
     ['c-i', 'team', 'A small, senior team.', 'Designers, motion artists and editors in Nepal, working with clients around the world.'],
     ['c-m', 'owner', 'One point of contact.', 'One person owns your project from brief to final file, so nothing gets lost.'],
   ];
-  const FI = { flex: '<path d="M4 12h16M4 12l4-4M4 12l4 4M20 12l-4-4M20 12l-4 4"/>', team: '<circle cx="8" cy="9" r="3"/><circle cx="16" cy="9" r="3"/><path d="M2 20a6 6 0 0 1 12 0M10 20a6 6 0 0 1 12 0"/>', owner: '<circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0M17 4l2 2 3-3"/>' };
-  $('#fcards').innerHTML = F.map(([c, ic, t, d]) => `<article class="fcard ${c} reveal" tabindex="0"><div class="fm fg"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${FI[ic]}</svg></div><div class="fb"><h3 class="w">${t}</h3><p>${d}</p></div></article>`).join('');
+  $('#fcards').innerHTML = F.map(([c, k, t, d]) => `<article class="fcard ${c} reveal" tabindex="0"><div class="fm fg" aria-hidden="true">${SCENES[k]}</div><div class="fb"><h3 class="w">${t}</h3><p>${d}</p></div></article>`).join('');
 
 
   // Services flow (after superside.com): pills → beam → J. hub → arrows → teams.
@@ -244,7 +252,6 @@ if (page === 'home') {
   $('#collage').innerHTML = ['janakpur-bolts', 'lumbini-all-stars', 'husqvarna'].map(f => `<img src="assets/clients/${f}.png" alt="" loading="lazy">`).join('');
   $('#tj').innerHTML = `<span style="display:flex;align-items:flex-end;gap:3px;width:46%">${LOGO_NAV.split('<span')[0].replace('class="lj"', 'style="width:72%;height:auto;color:#fff"')}<i style="width:24%;aspect-ratio:1;border-radius:50%;background:var(--green);margin-bottom:6%"></i></span>`;
 
-  $('#tt-j').innerHTML = LOGO_NAV.split('<span')[0].replace('class="lj"', 'style="width:100%;height:auto;color:#fff"') + '<i></i>';
 }
 
 if (page === 'services') {
