@@ -442,3 +442,24 @@ nav::before,nav::after{display:none!important}
 .clogo{width:auto!important;height:56px!important;flex:none}
 .clogo img{max-width:72px!important;max-height:48px!important}
 @media(prefers-reduced-motion:reduce){.logos .logo-track{animation-duration:90s!important}}
+/* The Clearing */
+.notes-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:16px}
+.note{display:flex;flex-direction:column;border-radius:var(--r);overflow:hidden;background:var(--mist);color:var(--ink);transition:transform .45s var(--ease)}
+.note:hover{transform:translateY(-6px)}
+.note .nm{position:relative;aspect-ratio:4/3;overflow:hidden}
+.note.big .nm{aspect-ratio:16/11}
+.note .nm img{width:100%;height:100%;object-fit:cover;transition:transform 1s var(--ease)}
+.note:hover .nm img{transform:scale(1.05)}
+.ntag{position:absolute;left:14px;top:14px;padding:6px 12px;border-radius:99px;background:var(--ink);color:var(--green);font-size:12px;transform:rotate(-10deg);transform-origin:left}
+.note .nb{padding:22px;display:flex;flex-direction:column;gap:8px;flex:1}
+.note h3{font-size:clamp(20px,1.6vw,28px)}
+.note.big h3{font-size:clamp(24px,2.2vw,36px)}
+.nmeta{font-size:13px;color:var(--stone)}
+.nread{margin-top:auto;padding-top:10px;display:inline-flex;gap:8px;align-items:center;font-size:15px;transition:gap .3s var(--ease)}
+.note:hover .nread{gap:14px}
+body[data-page=clearing] .note{background:#262626;color:var(--paper)} body[data-page=clearing] .note .muted,body[data-page=clearing] .nmeta{color:var(--smoke)}
+.art-hero{margin:0 var(--gut);border-radius:var(--r);overflow:hidden;aspect-ratio:2/1}
+.art-hero img{width:100%;height:100%;object-fit:cover}
+.prose{max-width:68ch;margin:0 auto;font-size:clamp(18px,1.3vw,21px);line-height:1.7}
+.prose p+p{margin-top:1.2em}
+@media(max-width:900px){.notes-grid{grid-template-columns:1fr}}

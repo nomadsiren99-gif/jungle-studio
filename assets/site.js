@@ -103,7 +103,7 @@ document.body.insertAdjacentHTML('afterbegin', `
   <button class="menu" aria-expanded="false" aria-controls="nav-links">Menu</button>
   <div class="links" id="nav-links">
     <a href="work.html" data-p="work">Work</a><div class="has-mega"><button class="mega-btn" data-p="services" aria-expanded="false" aria-controls="mega">Services <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>${MEGA}</div><div class="has-mega"><button class="mega-btn" data-p="why" aria-expanded="false" aria-controls="mega-why">Why us <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>${WHY_MENU}</div>
-    <a href="contact.html" data-p="contact">Contact</a><a class="btn" href="contact.html">Start a project</a></div></nav>`);
+    <a href="clearing.html" data-p="clearing">The Clearing</a><a href="contact.html" data-p="contact">Contact</a><a class="btn" href="contact.html">Start a project</a></div></nav>`);
 document.body.insertAdjacentHTML('beforeend', `
 <footer class="cta">${page === 'contact' || page === 'home' ? '' : `
   <p class="cta-line reveal">Good ideas deserve good execution<span class="dot">.</span></p>
@@ -111,7 +111,7 @@ document.body.insertAdjacentHTML('beforeend', `
   <a class="chip chip-lg" href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a></div>`}
   <div class="foot">
     <div>${LOGO}<small>A design-led creative agency.<br>Design, motion, digital, content and AI services.</small></div>
-    <div><span class="label">Site</span><a href="work.html">Work</a><a href="services.html">Services</a><a href="contact.html">Contact</a></div>
+    <div><span class="label">Site</span><a href="work.html">Work</a><a href="services.html">Services</a><a href="clearing.html">The Clearing</a><a href="contact.html">Contact</a></div>
     <div><span class="label">Follow</span><a href="https://instagram.com/jungledesigns">Instagram</a><a href="https://designbyjungle.com">designbyjungle.com</a></div>
     <div><span class="label">Say hello</span><a href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a><small>© 2026 Jungle.</small></div>
   </div></footer>`);
@@ -398,6 +398,26 @@ if (page === 'project') {
   <a class="next" href="project.html?p=${nx.slug}"><span class="label">Next project</span><span class="x">${nx.title}</span></a>`;
   $$('#cs h1.x, #cs .next .x').forEach(h => { h.innerHTML += '<span class="dot">.</span>'; });
   $$('#cs .words').forEach(h => { let k = 0; h.innerHTML = h.innerHTML.replace(/(<span class="dot">.*?<\/span>)|([^\s<]+)/g, (m, d, w) => d || `<span class="wd" style="--i:${k++}">${w}</span>`); h.classList.add('rise'); });
+}
+
+// ── The Clearing (notes from the studio)
+const fmtDate = d => new Intl.DateTimeFormat('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }).format(new Date(d));
+const noteCard = (n, big) => `<a class="note${big ? ' big' : ''} reveal" href="clearing.html?a=${n.slug}"><div class="nm"><img src="${n.img}" alt="" loading="lazy"><span class="ntag">${n.tag}</span></div>
+  <div class="nb"><p class="nmeta">${fmtDate(n.date)} · ${n.mins} min read</p><h3 class="w">${n.title}</h3><p class="muted">${n.dek}</p><span class="nread">Read ${ARROW.replace('<svg', '<svg width="16" height="16"')}</span></div></a>`;
+if (typeof NOTES !== 'undefined' && $('#notes')) $('#notes').innerHTML = noteCard(NOTES[0], true) + NOTES.slice(1, 3).map(n => noteCard(n)).join('');
+if (page === 'clearing') {
+  const a = new URLSearchParams(location.search).get('a'), n = NOTES.find(x => x.slug === a);
+  if (n) {
+    document.title = `${n.title} | The Clearing | Jungle.`;
+    $('#clr').innerHTML = `<article class="art-page"><header class="ph" style="max-width:900px"><p class="sv-crumb"><a href="clearing.html">The Clearing</a> / ${n.tag}</p><h1 class="x words">${n.title}.</h1><p class="lead">${n.dek}</p><p class="nmeta" style="margin-top:12px">${fmtDate(n.date)} · ${n.mins} min read</p></header>
+      <figure class="art-hero"><img src="${n.img}" alt=""></figure>
+      <div class="inv pad sec"><div class="prose">${n.body.map(p => `<p>${p}</p>`).join('')}<p><a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a></p></div></div>
+      <section class="pad sec"><h2 class="x" style="font-size:var(--t-head)">Keep reading.</h2><div class="notes-grid mt">${NOTES.filter(x => x !== n).slice(0, 3).map(x => noteCard(x)).join('')}</div></section></article>`;
+  } else {
+    $('#clr').innerHTML = `<header class="ph"><h1 class="x words">The Clearing.</h1><p class="lead">Notes, process and ideas from the studio. Where we step back from the work and say what we learned.</p></header>
+      <section class="pad" style="padding-bottom:clamp(88px,10vw,160px)"><div class="notes-grid">${NOTES.map((x, i) => noteCard(x, i === 0)).join('')}</div></section>`;
+  }
+  $$('#clr h1.x').forEach(h => { if (!h.querySelector('.dot')) h.innerHTML = h.innerHTML.replace(/\.$/, '<span class="dot">.</span>'); let k = 0; h.innerHTML = h.innerHTML.replace(/(<span class="dot">.*?<\/span>)|([^\s<]+)/g, (m, d, w) => d || `<span class="wd" style="--i:${k++}">${w}</span>`); h.classList.add('rise'); });
 }
 
 // ── reveal on scroll + counters
