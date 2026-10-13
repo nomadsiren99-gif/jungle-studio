@@ -65,7 +65,6 @@ img{max-width:100%;display:block}
 .rule{border-top:1px solid var(--ink-line)} .inv .rule,.inv.rule{border-color:var(--mist)}
 
 /* the slant: a section whose top edge rises at 10° */
-.slant-top{--sl:calc(100vw * var(--tan));clip-path:polygon(0 var(--sl),100% 0,100% 100%,0 100%);margin-top:calc(-1 * var(--sl) + 1px);padding-top:calc(var(--sl) + clamp(48px,6vw,96px));position:relative}
 .slant-bar{display:block;width:44px;height:16px;background:var(--green);clip-path:polygon(0 8px,100% 0,100% 100%,0 100%)}
 .inv .slant-bar{background:var(--ink)}
 
@@ -89,10 +88,9 @@ img{max-width:100%;display:block}
 .chip-lg{height:56px;padding:0 28px;font-size:16px}
 .chips{display:flex;gap:8px;flex-wrap:wrap}
 
-/* page transition: a green panel that wipes along the slant */
-#curtain{position:fixed;left:0;right:0;top:calc(-100vw * var(--tan));height:calc(100vh + 200vw * var(--tan));z-index:900;background:var(--green);color:var(--ink);
-  display:grid;place-items:center;pointer-events:none;transform:translateY(0);transition:transform .6s var(--ease);
-  clip-path:polygon(0 calc(100vw * var(--tan)),100% 0,100% calc(100% - 100vw * var(--tan)),0 100%)}
+/* page transition: a green panel that wipes up */
+#curtain{position:fixed;inset:0;z-index:900;background:var(--green);color:var(--ink);
+  display:grid;place-items:center;pointer-events:none;transform:translateY(0);transition:transform .6s var(--ease)}
 #curtain svg{width:clamp(48px,6vw,80px);height:auto}
 body.ready #curtain{transform:translateY(-110%)}
 body.leaving #curtain{transform:translateY(0);transition-duration:.45s}
@@ -291,3 +289,41 @@ html{color-scheme:dark;touch-action:manipulation;-webkit-tap-highlight-color:tra
 h1,h2,h3{scroll-margin-top:96px}
 .motion-toggle{position:fixed;right:16px;bottom:16px;z-index:90;height:40px;padding:0 16px;border-radius:99px;border:1px solid #444;background:rgba(26,26,26,.85);color:var(--paper);font:400 13px Aileron,sans-serif;cursor:pointer;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
 body.still *,body.still *::before,body.still *::after{animation-play-state:paused!important}
+
+/* SERVICES MEGA MENU (after superside.com) */
+.has-mega{position:static}
+.mega-btn{display:inline-flex;align-items:center;gap:6px;background:none;border:0;color:var(--smoke);font:inherit;cursor:pointer;padding:0;transition:color .3s}
+.mega-btn:hover,.has-mega.open .mega-btn,.mega-btn.cur{color:var(--paper)}
+.mega-btn svg{transition:transform .3s var(--ease)}
+.has-mega.open .mega-btn svg{transform:rotate(180deg)}
+.mega-btn.cur::before{content:"";width:6px;height:6px;border-radius:50%;background:var(--green);margin-right:4px}
+.mega{position:fixed;left:0;right:0;top:72px;background:var(--paper);color:var(--ink);border-top:1px solid var(--mist);box-shadow:0 30px 60px -30px rgba(0,0,0,.6);
+  opacity:0;visibility:hidden;transform:translateY(-8px);transition:opacity .3s var(--ease),transform .3s var(--ease),visibility 0s .3s;max-height:calc(100dvh - 72px);overflow:auto}
+.has-mega.open .mega{opacity:1;visibility:visible;transform:none;transition:opacity .3s var(--ease),transform .3s var(--ease)}
+.mega-in{display:grid;grid-template-columns:repeat(3,1fr);gap:clamp(24px,3vw,56px);padding:32px var(--gut) 40px;max-width:1600px;margin:0 auto}
+.mh{display:inline-flex;align-items:center;gap:8px;padding:9px 16px;border-radius:10px;font:400 17px/1 "PP Agrandir",sans-serif;margin-bottom:14px;transition:transform .3s var(--ease)}
+.mh:hover{transform:translateY(-2px)}
+.mh-g{background:var(--green);color:var(--ink)} .mh-i{background:var(--ink);color:var(--green)} .mh-m{background:#262626;color:var(--paper)} .mh-p{background:var(--mist);color:var(--ink)}
+.mcol ul{list-style:none;margin-bottom:28px}
+.mcol li a{display:flex;justify-content:space-between;align-items:center;gap:16px;padding:12px 0;border-bottom:1px solid var(--mist);color:var(--ink)}
+.mcol li:last-child a{border-bottom:0}
+.mcol b{display:block;font-weight:400;font-size:15px;transition:transform .3s var(--ease)}
+.mcol small{display:block;color:var(--stone);font-size:13px;margin-top:2px}
+.mcol em{font-style:normal;font-size:11px;padding:2px 8px;border-radius:99px;background:var(--green);margin-left:6px;vertical-align:1px}
+.mcol li svg{width:20px;height:20px;flex:none;color:var(--stone);transition:color .3s,transform .3s var(--ease)}
+.mcol li a:hover b{transform:translateX(4px)} .mcol li a:hover svg{color:var(--ink);transform:rotate(-10deg)}
+.mcol li a:focus-visible{outline-color:var(--ink)}
+nav.mega-open{background:var(--ink)}
+@media(max-width:760px){
+  .has-mega{width:100%}
+  nav .links .mega-btn{font:400 clamp(40px,12vw,56px)/1.15 "PP Agrandir",sans-serif;color:var(--paper)}
+  .mega-btn svg{width:28px;height:28px}
+  .mega{position:static;max-height:0;opacity:1;visibility:visible;transform:none;box-shadow:none;border:0;background:none;color:var(--paper);overflow:hidden;transition:max-height .5s var(--ease)}
+  .has-mega.open .mega{max-height:2000px}
+  .mega-in{grid-template-columns:1fr;padding:12px 0 8px;gap:8px}
+  .mcol li a{color:var(--paper);border-color:#2c2c2c} .mcol small{color:var(--smoke)} .mcol li svg{color:var(--smoke)}
+  nav .links{overflow-y:auto}
+}
+nav .mega .mh-g{color:var(--ink)} nav .mega .mh-i{color:var(--green)} nav .mega .mh-m{color:var(--paper)} nav .mega .mh-p{color:var(--ink)}
+nav .mega a::before{display:none!important}
+@media(max-width:760px){nav .mega .mh-p{color:var(--ink)}}

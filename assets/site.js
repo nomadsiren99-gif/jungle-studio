@@ -17,6 +17,50 @@ const card = p => `<a class="card reveal" data-c="${p.cat}" href="project.html?p
   <div class="thumb">${art(p)}</div>
   <div class="meta"><div><h3 class="w">${p.title}</h3><p>${sector(p)}</p></div><span class="n">${p.year}</span></div></a>`;
 
+// Services mega menu (layout after superside.com's nav; Jungle services and copy).
+const IC = {
+  ad: '<circle cx="12" cy="12" r="8"/><circle cx="12" cy="12" r="3"/>', social: '<rect x="4" y="4" width="16" height="16" rx="5"/><circle cx="12" cy="12" r="3.5"/><circle cx="16.8" cy="7.2" r=".6"/>',
+  pres: '<rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 16v4M8 20h8"/>', ill: '<path d="M4 20l4-1L19 8l-3-3L5 16z"/><path d="M14 7l3 3"/>',
+  book: '<path d="M5 4h11a3 3 0 0 1 3 3v13H8a3 3 0 0 1-3-3z"/><path d="M5 17a3 3 0 0 1 3-3h11"/>', print: '<path d="M7 9V4h10v5M7 17H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="6"/>',
+  pack: '<path d="M4 8l8-4 8 4v8l-8 4-8-4z"/><path d="M4 8l8 4 8-4M12 12v8"/>', motion: '<circle cx="12" cy="12" r="8"/><path d="M10 9l5 3-5 3z"/>',
+  video: '<rect x="3" y="6" width="13" height="12" rx="2"/><path d="M16 10l5-3v10l-5-3"/>', mail: '<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/>',
+  web: '<rect x="3" y="4" width="18" height="16" rx="2"/><path d="M3 9h18M7 6.5h.01M10 6.5h.01"/>', sys: '<rect x="4" y="4" width="7" height="7" rx="1.5"/><rect x="13" y="4" width="7" height="7" rx="1.5"/><rect x="4" y="13" width="7" height="7" rx="1.5"/><circle cx="16.5" cy="16.5" r="3.5"/>',
+  prod: '<rect x="7" y="3" width="10" height="18" rx="2.5"/><path d="M11 18h2"/>', copy: '<path d="M5 6h14M5 10h14M5 14h9M5 18h6"/>', imm: '<path d="M12 3l8 4.5v9L12 21l-8-4.5v-9z"/><path d="M12 12l8-4.5M12 12v9M12 12L4 7.5"/>',
+  ai: '<path d="M12 3l1.8 4.7L18.5 9.5l-4.7 1.8L12 16l-1.8-4.7L5.5 9.5l4.7-1.8z"/>', chat: '<path d="M5 5h14v10H9l-4 4z"/>', auto: '<path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/>',
+  camp: '<path d="M4 10v4h3l7 4V6L7 10z"/><path d="M18 9a4 4 0 0 1 0 6"/>',
+};
+const MENU = [
+  [['Creative design services', 'g', 'creative'], [
+    ['Ad creative', 'Scroll-stopping ads for every placement', 'ad'], ['Social media creative', 'Posts, stories and carousels that feel like you', 'social'],
+    ['Presentation design', 'Decks people actually want to sit through', 'pres'], ['Illustration design', 'Drawn worlds that carry your story', 'ill'],
+    ['eBooks and report design', 'Long reads, made easy to read', 'book'], ['Print design', 'Posters, flyers and event materials', 'print'],
+    ['Packaging and merchandise design', 'Kits, tees, scarves and everything fans keep', 'pack']]],
+  [['Motion and digital services', 'i', 'motion'], [
+    ['Motion design', 'Animated type, logos and social motion', 'motion'], ['Video editing', 'Reels, promos, cutdowns and versions', 'video'],
+    ['Email creation', 'Emails that get opened and clicked', 'mail'], ['Web design', 'Websites and landing pages built to convert', 'web'],
+    ['Design systems', 'Templates and rules that keep work consistent', 'sys', 1], ['Product design', 'Clear, friendly app and product screens', 'prod', 1],
+    ['Copywriting', 'Words that sound like you, only sharper', 'copy', 1], ['Immersive experiences', 'Stage visuals, LED screens and 3D moments', 'imm']]],
+  [['AI services', 'm', 'ai'], [
+    ['AI-powered creative', 'Human craft, sped up with AI', 'ai'], ['AI consulting', 'Help your team work well with AI', 'chat'],
+    ['Automation', 'Resizing and versioning on autopilot', 'auto', 1]],
+   ['Marketing services', 'p', 'content'], [['Campaign strategy', 'The plan and concept behind the launch', 'camp', 1]]],
+];
+const svgI = k => `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${IC[k]}</svg>`;
+const mItem = ([t, d, ic, isNew]) => `<li><a href="services.html#${MENU_GROUP[t] || 'creative'}"><span><b>${t}${isNew ? ' <em>New</em>' : ''}</b><small>${d}</small></span>${svgI(ic)}</a></li>`;
+const mHead = ([t, c, a]) => `<a class="mh mh-${c}" href="services.html#${a}">${t} <span aria-hidden="true">↗</span></a>`;
+const MENU_GROUP = {};
+// Services (mirrors superside.com's list, without branding and production services).
+const DISCIPLINES = [
+  ['Creative Design', 'Design that shows up.', ['Ad creative', 'Social media creative', 'Presentation design', 'Illustration design', 'eBooks and report design', 'Print design', 'Packaging and merchandise design']],
+  ['Motion Design', 'Motion that moves.', ['Motion design', 'Video editing']],
+  ['Digital Design', 'Built for every screen.', ['Web design', 'Email creation', 'Design systems', 'Product design', 'Immersive experiences']],
+  ['Content and Campaigns', 'Words and plans that land.', ['Copywriting', 'Campaign strategy']],
+  ['AI Services', 'Faster, with a human eye.', ['AI-powered creative', 'AI consulting', 'Automation']],
+];
+const SERVICE_COUNT = DISCIPLINES.reduce((n, d) => n + d[2].length, 0);
+DISCIPLINES.forEach(([g, , list]) => list.forEach(n => MENU_GROUP[n] = g.split(' ')[0].toLowerCase()));
+const MEGA = `<div class="mega" id="mega"><div class="mega-in">${MENU.map(col => { let h = ''; for (let i = 0; i < col.length; i += 2) h += mHead(col[i]) + `<ul>${col[i + 1].map(mItem).join('')}</ul>`; return `<div class="mcol">${h}</div>`; }).join('')}</div></div>`;
+
 // ── chrome
 document.body.insertAdjacentHTML('afterbegin', `
 <a class="skip" href="#main">Skip to content</a>
@@ -24,7 +68,7 @@ document.body.insertAdjacentHTML('afterbegin', `
 <nav><a class="logo" href="index.html" aria-label="Jungle, home">${LOGO_NAV}</a>
   <button class="menu" aria-expanded="false" aria-controls="nav-links">Menu</button>
   <div class="links" id="nav-links">
-    <a href="work.html" data-p="work">Work</a><a href="services.html" data-p="services">Services</a>
+    <a href="work.html" data-p="work">Work</a><div class="has-mega"><button class="mega-btn" data-p="services" aria-expanded="false" aria-controls="mega">Services <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>${MEGA}</div>
     <a href="contact.html" data-p="contact">Contact</a><a class="btn" href="contact.html">Start a project</a></div></nav>`);
 document.body.insertAdjacentHTML('beforeend', `
 <footer class="cta">${page === 'contact' || page === 'home' ? '' : `
@@ -48,6 +92,15 @@ const nav = $('nav'), menu = $('nav .menu');
 menu.onclick = () => { const o = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', o); menu.textContent = o ? 'Close' : 'Menu'; };
 const onScroll = () => nav.classList.toggle('scrolled', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
+{ // mega menu: hover on desktop, click/tap anywhere, Esc to close
+  const hm = $('.has-mega'), mb = $('.mega-btn'), fine = matchMedia('(hover: hover) and (min-width: 761px)');
+  let t; const set = o => { clearTimeout(t); hm.classList.toggle('open', o); nav.classList.toggle('mega-open', o && fine.matches); mb.setAttribute('aria-expanded', o); };
+  mb.onclick = () => set(!hm.classList.contains('open'));
+  hm.onmouseenter = () => fine.matches && set(true);
+  hm.onmouseleave = () => { if (fine.matches) t = setTimeout(() => set(false), 160); };
+  document.addEventListener('keydown', e => { if (e.key === 'Escape' && hm.classList.contains('open')) { set(false); mb.focus(); } });
+  document.addEventListener('click', e => { if (!hm.contains(e.target)) set(false); });
+}
 
 // Every headline ends with the full stop (Brand Book 03 / Graphic language).
 $$('h1.x, h2.x, .next .x').forEach(h => {
@@ -81,15 +134,6 @@ document.addEventListener('click', e => {
 });
 
 // ── page renderers
-// Services (mirrors superside.com's list, without branding and production services).
-const DISCIPLINES = [
-  ['Creative Design', 'Design that shows up.', ['Ad creative', 'Social media creative', 'Presentation design', 'Illustration design', 'eBooks and report design', 'Print design', 'Packaging and merchandise design']],
-  ['Motion Design', 'Motion that moves.', ['Motion design', 'Video editing']],
-  ['Digital Design', 'Built for every screen.', ['Web design', 'Email creation', 'Design systems', 'Product design', 'Immersive experiences']],
-  ['Content and Campaigns', 'Words and plans that land.', ['Copywriting', 'Campaign strategy']],
-  ['AI Services', 'Faster, with a human eye.', ['AI-powered creative', 'AI consulting', 'Automation']],
-];
-const SERVICE_COUNT = DISCIPLINES.reduce((n, d) => n + d[2].length, 0);
 
 if (page === 'home') {
   // Section order follows superside.com; every visual is Jungle's own work and brand system.
