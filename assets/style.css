@@ -424,3 +424,21 @@ nav::before,nav::after{display:none!important}
 .showreel video{width:100%;height:100%;object-fit:cover;display:block}
 .sr-btn{position:absolute;right:20px;bottom:20px;width:52px;height:52px;border-radius:50%;border:0;background:var(--green);color:var(--ink);display:grid;place-items:center;cursor:pointer;transition:transform .3s var(--bounce)}
 .sr-btn:hover{transform:scale(1.08)} .sr-btn svg{width:20px;height:20px}
+/* Why us */
+.has-mega+.has-mega{margin-left:0}
+.mega-sm .mega-in{max-width:520px;margin:0 0 0 auto;margin-right:calc(var(--gut) + 160px)}
+.why-tabs{margin-top:12px}
+.why-split{display:grid;grid-template-columns:1fr 1fr;gap:clamp(24px,4vw,64px)}
+.why-split h3{font-size:clamp(22px,2vw,32px);margin-bottom:12px}
+.why-list{list-style:none;margin-top:8px}
+.why-list li{padding:14px 0;border-bottom:1px solid var(--mist);font-size:17px}
+.why-list li::before{content:"";display:inline-block;width:8px;height:8px;border-radius:50%;background:var(--ink);margin-right:12px;vertical-align:2px}
+#why .vs-t td{border-top-color:var(--mist)} #why .vs-t .who b{color:var(--ink)} #why .vs-t tr:not(.us):hover td{background:var(--mist)}
+@media(max-width:800px){.why-split{grid-template-columns:1fr}.mega-sm .mega-in{margin:0}}
+/* client logos: smaller, always sliding */
+.logos{overflow:hidden}
+.logos .logo-track{display:flex!important;align-items:center;gap:48px!important;width:max-content;animation:slide 30s linear infinite!important}
+.logos:hover .logo-track{animation-play-state:paused!important}
+.clogo{width:auto!important;height:56px!important;flex:none}
+.clogo img{max-width:72px!important;max-height:48px!important}
+@media(prefers-reduced-motion:reduce){.logos .logo-track{animation-duration:90s!important}}

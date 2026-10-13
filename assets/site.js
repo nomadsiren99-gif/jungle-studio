@@ -85,6 +85,16 @@ const SERVICE_COUNT = DISCIPLINES.reduce((n, d) => n + d[2].length, 0);
 DISCIPLINES.forEach(([g, , list]) => list.forEach(n => MENU_GROUP[n] = g.split(' ')[0].toLowerCase()));
 const MEGA = `<div class="mega" id="mega"><div class="mega-in">${MENU.map(col => { let h = ''; for (let i = 0; i < col.length; i += 2) h += mHead(col[i]) + `<ul>${col[i + 1].map(mItem).join('')}</ul>`; return `<div class="mcol">${h}</div>`; }).join('')}</div></div>`;
 
+
+// "Why us" pages (why.html?p=<slug>), one template.
+const WHY = [
+  ['how-it-works', 'How it works', 'From brief to finished files, step by step', 'flex'],
+  ['why-jungle', 'Why Jungle', 'What makes teams stay with us', 'owner'],
+  ['craft-and-ai', 'Craft and AI', 'Where AI helps, and where people lead', 'ai'],
+  ['compare', 'Jungle vs alternatives', 'Hiring, agencies, freelancers or AI tools', 'sys'],
+  ['faq', 'FAQ', 'Straight answers to common questions', 'chat'],
+];
+const WHY_MENU = `<div class="mega mega-sm" id="mega-why"><div class="mega-in" style="grid-template-columns:1fr">${`<div class="mcol"><a class="mh mh-g" href="why.html">Why us <span aria-hidden="true">↗</span></a><ul>${WHY.map(([k, t, d, ic]) => `<li><a href="why.html?p=${k}"><span><b>${t}</b><small>${d}</small></span>${svgI(ic in IC ? ic : 'chat')}</a></li>`).join('')}</ul></div>`}</div></div>`;
 // ── chrome
 document.body.insertAdjacentHTML('afterbegin', `
 <a class="skip" href="#main">Skip to content</a>
@@ -92,7 +102,7 @@ document.body.insertAdjacentHTML('afterbegin', `
 <nav><a class="logo" href="index.html" aria-label="Jungle, home">${LOGO_NAV}</a>
   <button class="menu" aria-expanded="false" aria-controls="nav-links">Menu</button>
   <div class="links" id="nav-links">
-    <a href="work.html" data-p="work">Work</a><div class="has-mega"><button class="mega-btn" data-p="services" aria-expanded="false" aria-controls="mega">Services <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>${MEGA}</div>
+    <a href="work.html" data-p="work">Work</a><div class="has-mega"><button class="mega-btn" data-p="services" aria-expanded="false" aria-controls="mega">Services <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>${MEGA}</div><div class="has-mega"><button class="mega-btn" data-p="why" aria-expanded="false" aria-controls="mega-why">Why us <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>${WHY_MENU}</div>
     <a href="contact.html" data-p="contact">Contact</a><a class="btn" href="contact.html">Start a project</a></div></nav>`);
 document.body.insertAdjacentHTML('beforeend', `
 <footer class="cta">${page === 'contact' || page === 'home' ? '' : `
@@ -118,14 +128,17 @@ menu.onclick = () => { const o = nav.classList.toggle('open'); menu.setAttribute
 nav.addEventListener('pointermove', e => { const r = nav.getBoundingClientRect(); nav.style.setProperty('--gx', (e.clientX - r.left) + 'px'); });
 const onScroll = () => nav.classList.toggle('scrolled', scrollY > 40);
 addEventListener('scroll', onScroll, { passive: true }); onScroll();
-{ // mega menu: hover on desktop, click/tap anywhere, Esc to close
-  const hm = $('.has-mega'), mb = $('.mega-btn'), fine = matchMedia('(hover: hover) and (min-width: 761px)');
-  let t; const set = o => { clearTimeout(t); hm.classList.toggle('open', o); nav.classList.toggle('mega-open', o && fine.matches); mb.setAttribute('aria-expanded', o); };
-  mb.onclick = () => set(!hm.classList.contains('open'));
-  hm.onmouseenter = () => fine.matches && set(true);
-  hm.onmouseleave = () => { if (fine.matches) t = setTimeout(() => set(false), 160); };
-  document.addEventListener('keydown', e => { if (e.key === 'Escape' && hm.classList.contains('open')) { set(false); mb.focus(); } });
-  document.addEventListener('click', e => { if (!hm.contains(e.target)) set(false); });
+{ // mega menus: hover on desktop, click/tap anywhere, Esc to close
+  const fine = matchMedia('(hover: hover) and (min-width: 761px)');
+  const all = $$('.has-mega');
+  all.forEach(hm => { const mb = $('.mega-btn', hm); let t;
+    const set = o => { clearTimeout(t); if (o) all.forEach(x => x !== hm && x.classList.remove('open')); hm.classList.toggle('open', o); nav.classList.toggle('mega-open', !!$('.has-mega.open') && fine.matches); mb.setAttribute('aria-expanded', o); };
+    mb.onclick = () => set(!hm.classList.contains('open'));
+    hm.onmouseenter = () => fine.matches && set(true);
+    hm.onmouseleave = () => { if (fine.matches) t = setTimeout(() => set(false), 160); };
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && hm.classList.contains('open')) { set(false); mb.focus(); } });
+    document.addEventListener('click', e => { if (!hm.contains(e.target)) set(false); });
+  });
 }
 
 // Every headline ends with the full stop (Brand Book 03 / Graphic language).
@@ -316,6 +329,30 @@ if (page === 'service') {
     <div class="tags mt">${others.map(x => `<a href="service.html?s=${slugify(x)}">${x}</a>`).join('')}</div></section>` : ''}`;
   $$('#svc h1.x, #svc h2.x').forEach(h => { if (!h.querySelector('.dot')) h.innerHTML = h.innerHTML.replace(/\.?$/, '<span class="dot">.</span>'); });
   $$('#svc .words').forEach(h => { let k = 0; h.innerHTML = h.innerHTML.replace(/(<span class="dot">.*?<\/span>)|([^\s<]+)/g, (m, dd, w) => dd || `<span class="wd" style="--i:${k++}">${w}</span>`); h.classList.add('rise'); });
+}
+
+if (page === 'why') {
+  const k = new URLSearchParams(location.search).get('p') || 'how-it-works';
+  const cur = WHY.find(w => w[0] === k) || WHY[0];
+  document.title = `${cur[1]} | Jungle.`;
+  const tabs = `<div class="chips why-tabs">${WHY.map(([kk, t]) => `<a class="chip${kk === cur[0] ? ' on' : ''}" href="why.html?p=${kk}"${kk === cur[0] ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</div>`;
+  const B = {
+    'how-it-works': `<div class="steps">${[['Brief', 'Tell us what you need, the formats and the date, in plain words. A call or a message both work.'], ['Direction', 'We come back with a route built on your brand, with a reason behind it.'], ['Production', 'Every format and size, with clear rounds of feedback in one thread.'], ['Delivery', 'Organised, named files on the agreed date. Ongoing clients get a steady weekly rhythm.']].map(([a, b], i) => `<div class="step reveal"><b class="n">${i + 1}</b><div><h3 class="w">${a}</h3><p>${b}</p></div></div>`).join('')}</div>
+      <div class="why-split mt"><div><h3 class="w">Ways to work with us</h3><p class="muted">Project by project, ongoing creative support, or full campaign production. Change between them as your plans change.</p></div><div><h3 class="w">What we need from you</h3><p class="muted">Your brand guidelines, a clear brief and one person who can give feedback. That’s it.</p></div></div>`,
+    'why-jungle': `<div class="dgrid" style="margin-top:0">${[['Scalable', 'More output, same headcount.', 'We take on the production load so your team can stay on the big ideas.'], ['Flexible', 'Say yes to more projects.', 'More hands or a new skill, we flex with your calendar.'], ['Responsive', 'Fast, without cutting corners.', 'Quick turnarounds with the same care for type, timing and detail.'], ['Reliable', 'One owner, no surprises.', 'Clear scope, realistic dates and files delivered the way you need them.']].map(([l, h, p]) => `<div class="reveal"><p class="label">${l}</p><h3 class="w" style="margin:10px 0">${h}</h3><p class="muted">${p}</p></div>`).join('')}</div>`,
+    'craft-and-ai': `<div class="why-split"><div class="reveal"><h3 class="w">Where AI helps</h3><ul class="why-list"><li>Resizing one design into every format</li><li>Versions and variations for testing</li><li>First drafts and moodboards</li><li>Repetitive production tasks</li></ul></div><div class="reveal"><h3 class="w">Where people lead</h3><ul class="why-list"><li>The idea and the concept</li><li>Typography, composition and timing</li><li>Your brand and its details</li><li>Every final check before delivery</li></ul></div></div>
+      <p class="lead mt reveal">AI makes us faster. It never replaces the designer’s eye, and nothing leaves Jungle without a person signing it off.</p>`,
+    'compare': `<div class="vs-scroll" style="margin-top:0"><table class="vs-t"><thead><tr><th scope="col"><span class="sr">Option</span></th><th scope="col">Speed</th><th scope="col">Flexibility</th><th scope="col">Craft</th><th scope="col">Reliability</th><th scope="col">Value</th><th scope="col">Human touch</th></tr></thead><tbody id="vs-body"></tbody></table></div>`,
+    'faq': [['Do you do branding?', 'No. We work with brands that already exist and make the creative that carries them, built on your guidelines.'], ['Will my work look like Jungle?', 'No. Our own brand is black, white and green. Your work follows your brand.'], ['How fast can you turn work around?', 'Most social and campaign assets take a few working days. Tell us your date and we’ll tell you honestly what’s possible.'], ['Can you work with our in-house team or agency?', 'Yes. We work as an extension of in-house teams, and as white-label production for agencies when agreed.'], ['Where is the team based?', 'In Nepal, working with clients in Nepal, Australia, New Zealand and beyond.'], ['How do we start?', 'Send a brief through the contact page. We reply within one working day.']].map(([q, a]) => `<details><summary>${q}</summary><p>${a}</p></details>`).join(''),
+  };
+  $('#why').innerHTML = `<header class="ph"><p class="sv-crumb"><a href="why.html">Why us</a></p><h1 class="x words">${cur[1]}.</h1><p class="lead">${cur[2]}.</p>${tabs}</header>
+    <section class="inv pad sec">${B[cur[0]]}</section>`;
+  if (cur[0] === 'compare') {
+    const tick = c => `<svg class="tick" viewBox="0 0 26 26" style="--c:${c}" role="img" aria-label="Yes"><path d="M6 13.5l4.5 4.5L20 8.5"/></svg>`;
+    const R = [['Jungle.', 'Designers, motion artists and writers working alongside your team.', [1, 1, 1, 1, 1, 1]], ['In-house hire', 'One hire rarely covers design, motion, web and copy, and hiring takes months.', [0, 0, 1, 1, 0, 1]], ['Big agencies', 'Strong work, but slow, costly and built around rigid process.', [0, 0, 1, 1, 0, 0]], ['Freelancers', 'Great for one-offs, harder to rely on for steady volume.', [1, 1, 1, 0, 1, 1]], ['AI tools only', 'Fast and cheap, but no judgement, no brand sense, no craft.', [1, 1, 0, 0, 1, 0]]];
+    $('#vs-body').innerHTML = R.map(([t, d, v], r) => `<tr class="in${r ? '' : ' us'}"><td><div class="who"><div><b>${t}</b><p>${d}</p></div></div></td>${v.map((y, c) => `<td>${y ? tick(c) : '<span class="no" role="img" aria-label="No"></span>'}</td>`).join('')}</tr>`).join('');
+  }
+  $$('#why h1.x').forEach(h => { h.innerHTML = h.innerHTML.replace(/\.$/, '<span class="dot">.</span>'); let n = 0; h.innerHTML = h.innerHTML.replace(/(<span class="dot">.*?<\/span>)|([^\s<]+)/g, (m, d, w) => d || `<span class="wd" style="--i:${n++}">${w}</span>`); h.classList.add('rise'); });
 }
 
 if (page === 'work') {
