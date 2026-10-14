@@ -19,7 +19,7 @@ body.go .rise{opacity:1;transform:none}
 .wall{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;height:100dvh;margin-top:-72px;overflow:hidden;
   mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent);-webkit-mask-image:linear-gradient(transparent,#000 14%,#000 86%,transparent)}
 .wcol{overflow:hidden}
-.wtrack{display:flex;flex-direction:column;gap:14px;animation:wall 40s linear infinite}
+.wtrack{display:flex;flex-direction:column;gap:14px;animation:wall 20s linear infinite}
 .wcol.down .wtrack{animation-direction:reverse}
 .wall:hover .wtrack{animation-play-state:paused}
 @keyframes wall{to{transform:translateY(calc(-50% - 7px))}}

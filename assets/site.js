@@ -116,11 +116,6 @@ document.body.insertAdjacentHTML('beforeend', `
     <div><span class="label">Say hello</span><a href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a><small>© 2026 Jungle.</small></div>
   </div></footer>`);
 { const m = $('main') || $('.ph'); if (m && !m.id) m.id = 'main'; }
-// Long-running loops (wall, marquees) get a pause control.
-if ($('.wtrack, .logo-track, .wrow')) {
-  document.body.insertAdjacentHTML('beforeend', '<button class="motion-toggle" aria-pressed="false">Pause motion</button>');
-  const mt = $('.motion-toggle'); mt.onclick = () => { const s = document.body.classList.toggle('still'); mt.setAttribute('aria-pressed', s); mt.textContent = s ? 'Play motion' : 'Pause motion'; };
-}
 $$(`nav [data-p="${page}"]`).forEach(a => { a.classList.add('cur'); a.setAttribute('aria-current', 'page'); });
 const nav = $('nav'), menu = $('nav .menu');
 menu.onclick = () => { const o = nav.classList.toggle('open'); menu.setAttribute('aria-expanded', o); menu.textContent = o ? 'Close' : 'Menu'; };
@@ -187,7 +182,7 @@ if (page === 'home') {
       `<a class="tile${i % 3 === 1 ? ' tall' : ''}" href="project.html?p=${t.p.slug}" tabindex="-1">${pic(t.src, '', true)}<span>${t.p.title}</span></a>`).join('');
     return `<div class="wcol${c % 2 ? ' down' : ''}"><div class="wtrack">${cells}${cells}</div></div>`;
   }).join('');
-  const speed = () => $$('.wtrack').forEach(t => t.style.animationDuration = (t.scrollHeight / 2 / 25) + 's');
+  const speed = () => $$('.wtrack').forEach(t => t.style.animationDuration = (t.scrollHeight / 2 / 50) + 's');
   speed(); addEventListener('load', speed);
 
   // Clients: real logos, greyscale until hovered.
