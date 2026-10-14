@@ -108,7 +108,7 @@ document.body.insertAdjacentHTML('beforeend', `
 <footer class="cta">${page === 'contact' || page === 'home' ? '' : `
   <p class="cta-line reveal">Good ideas deserve good execution<span class="dot">.</span></p>
   <div class="cta-row"><a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a>
-  <a class="chip chip-lg" href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a></div>`}
+  <a class="btn btn-2" href="mailto:ronij.jungle@gmail.com">ronij.jungle@gmail.com</a></div>`}
   <div class="foot">
     <div>${LOGO}<small>A design-led creative agency.<br>Design, motion, digital, content and AI services.</small></div>
     <div><span class="label">Site</span><a href="work.html">Work</a><a href="services.html">Services</a><a href="clearing.html">The Clearing</a><a href="contact.html">Contact</a></div>
@@ -316,7 +316,7 @@ if (page === 'service') {
   <header class="ph sv-hero">
     <div><p class="sv-crumb"><a href="services.html">Services</a> / <a href="services.html#${gkey}">${grp[0]}</a></p>
       <h1 class="x words">${t}</h1><p class="lead" style="margin-top:20px">${d}. ${grp[1]}</p>
-      <div class="hero-ctas" style="margin-top:32px"><a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a><a class="chip chip-lg" href="#sv-work">See related work</a></div></div>
+      <div class="hero-ctas" style="margin-top:32px"><a class="btn" href="contact.html">Start a project <span aria-hidden="true">→</span></a><a class="btn btn-2" href="#sv-work">See related work</a></div></div>
     <figure class="sv-img"><img src="assets/stock/s-${gkey}.jpg" alt="" width="900" height="1125"><span class="sv-ic">${svgI(ic)}</span></figure>
   </header>
   <section class="inv pad sec"><h2 class="x reveal" style="font-size:var(--t-head)">What you get.</h2>
